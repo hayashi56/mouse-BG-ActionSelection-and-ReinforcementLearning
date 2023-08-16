@@ -1,1 +1,1 @@
-# monkeyBGGPU
+# mouse basal ganglia
