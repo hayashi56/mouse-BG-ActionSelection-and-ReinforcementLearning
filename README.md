@@ -1,4 +1,5 @@
 # model of action selection in the basal ganglia of the mouse
+このシミュレーションではこのシミュレーションプログラムはコマンドライン上で実⾏し動く。
 ## ファイル構成
 
 このファイルの末尾に一覧を添付する。また、各フォルダはそれぞれ`Makefile`を含んでいる。
@@ -61,12 +62,15 @@ rm -f *.dat
 ## ファイル一覧
 
 ```
-src/ : 第I部のソースコード
-src/hh/ : ホジキン・ハクスレー型モデル
-src/hh/hh.c : ホジキン・ハクスレーモデル
-src/hh/sfa.c : 発火頻度適応のモデル
-src/hh/sfa.c : 発火頻度適応のモデル
-src/hh/ia.c : Type Iニューロンのモデル
-src/lif/ : 積分発火型モデル
-src/lif/lif.c : 1個のモデル
+parametar.pdf : マウスの大脳基底核における解剖学的、電気⽣理学的データをもとにして定義したパラメータのまとめ
+src/ : ソースコード
+src/actionselection/bcbg.cu : 
+src/actionselection/param.h : 解剖学的・電気生理学的報告によるパラメータやシミュレーションに関するパラメータ(神経細胞の活動時間等)の定義が書かれているファイル
+src/actionselection/structure.cu : 構造体の定義やメモリの開放やファイルのクローズする関数が書かれているファイル
+src/actionselection/initalize.cu : 初期化、メモリ確保、ファイルをオープンする関数が書かれているファイル
+src/actionselection/synapse_function.cu : シナプス結合の更新に関する関数が書かれているファイル
+src/actionselection/update.cu : 時間変化による膜電位の更新や入力の神経細胞の活動に関する関数が書かれているファイル
+src/actionselection/output.cu : 出力に関する関数が書かれているファイル
+src/actionselection/function.cu : シミュレーションを行う関数やその他の関数が書かれているファイル
+src/actionselection/rasterplot.ipynb : シミュレーション結果をグラフにプロットするファイル
 ```
