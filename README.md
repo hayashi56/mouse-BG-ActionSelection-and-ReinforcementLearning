@@ -10,6 +10,7 @@
 programフォルダ内で下記の操作でコンパイル・実行(2回目以降はコンパイル前に)するか、もしくは`make`で自動的にコンパイル・実行される。
 
 ### コンパイル方法
+
 ```
 nvcc -O3 -std=c++11 -I../misc/SFMT-src-1.5.1 -D SFMT_MEXP=19937 -c bcbg.cu
 gcc -O3 -std=gnu11 -Wall -I../misc/SFMT-src-1.5.1 -D SFMT_MEXP=19937 -c ../misc/SFMT-src-1.5.1/SFMT.c
@@ -17,6 +18,7 @@ gcc -O3 -std=gnu11 -Wall -c ../misc/timer.c
 nvcc -O3 -std=c++11 -I../misc/SFMT-src-1.5.1 -D SFMT_MEXP=19937 -o bcbg bcbg.o SFMT.o timer.o -lm
 ```
 ### 実行方法
+
 ```
 ./bcbg
 ```
