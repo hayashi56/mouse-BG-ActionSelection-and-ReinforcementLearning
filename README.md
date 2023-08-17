@@ -10,16 +10,16 @@
 programフォルダ内で下記の操作でコンパイル・実行(2回目以降はコンパイル前に)するか、もしくは`make`で自動的にコンパイル・実行される。
 
 ### コンパイル方法
-'''
+```
 nvcc -O3 -std=c++11 -I../misc/SFMT-src-1.5.1 -D SFMT_MEXP=19937 -c bcbg.cu
 gcc -O3 -std=gnu11 -Wall -I../misc/SFMT-src-1.5.1 -D SFMT_MEXP=19937 -c ../misc/SFMT-src-1.5.1/SFMT.c
 gcc -O3 -std=gnu11 -Wall -c ../misc/timer.c
 nvcc -O3 -std=c++11 -I../misc/SFMT-src-1.5.1 -D SFMT_MEXP=19937 -o bcbg bcbg.o SFMT.o timer.o -lm
-'''
+```
 ### 実行方法
-'''
+```
 ./bcbg
-'''
+```
 ### 結果の表示
 実行後、実行結果が`baseline`と`actionselection`は、まず標準出力でシミュレーションの計算時間が`Elapsed time = (elapsedTime) sec.`の様な形(`(elapsedTime)は数値`)で出力され、そして標準出力で各神経細胞の平均発火率が以下のように出力される。
 ```
