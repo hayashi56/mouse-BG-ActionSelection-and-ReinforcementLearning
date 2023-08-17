@@ -11,7 +11,7 @@ typedef struct{
     int *refr, *ts, *counter, *post;
     long *num_pre;
     sfmt_t rng;
-    FILE *file, *file1, *file2;
+    FILE *file;
 } neuron_t;
 
 void fileclose( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI, neuron_t *n_STN, neuron_t *n_GPe, neuron_t *n_GPi, neuron_t *n_SNc, neuron_t *n_PTN, neuron_t *n_PTI, neuron_t *n_PSN, neuron_t *n_Th, neuron_t *n_CMPf ){
@@ -28,32 +28,6 @@ void fileclose( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI, neuron_
     fclose ( n_PSN -> file );
     fclose ( n_Th -> file );
     fclose ( n_CMPf -> file );
-
-    // fclose ( n_MSN_D1 -> file1 );
-    // fclose ( n_MSN_D2 -> file1 );
-    // fclose ( n_FSI -> file1 );
-    // fclose ( n_STN -> file1 );
-    // fclose ( n_GPe -> file1 );
-    // fclose ( n_GPi -> file1 );
-    // fclose ( n_SNc -> file1 );
-    // fclose ( n_PTI -> file1 );
-    // fclose ( n_PTN -> file1 );
-    fclose ( n_PSN -> file1 );
-    fclose ( n_Th -> file1 );
-    fclose ( n_CMPf -> file1 );
-    
-    //fclose ( n_MSN_D1 -> file2 );
-    //fclose ( n_MSN_D2 -> file2 );
-    //fclose ( n_FSI -> file2 );
-    //fclose ( n_STN -> file2 );
-    //fclose ( n_GPe -> file2 );
-    //fclose ( n_GPi -> file2 );
-    //fclose ( n_SNc -> file2 );
-    //fclose ( n_PTI -> file2 );
-    //fclose ( n_PTN -> file2 );
-    fclose ( n_PSN -> file2 );
-    fclose ( n_Th -> file2 );
-    fclose ( n_CMPf -> file2 );
 }
 
 void finalize ( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI, neuron_t *n_STN, neuron_t *n_GPe, neuron_t *n_GPi, neuron_t *n_SNc, neuron_t *n_PTN, neuron_t *n_PTI, neuron_t *n_PSN, neuron_t *n_Th, neuron_t *n_CMPf ){

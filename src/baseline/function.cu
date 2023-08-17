@@ -143,11 +143,7 @@ void loop( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI, neuron_t *n_
     for ( nt = 0; nt < FreeRun; nt++ ){
         updateSynapse ( nt, n_MSN_D1, n_MSN_D2, n_FSI, n_STN, n_GPe, n_GPi, n_SNc, n_PTN, n_PTI, n_PSN, n_Th, n_CMPf );
         InputSynapsePotential ( nt, n_MSN_D1, n_MSN_D2, n_FSI, n_STN, n_GPe, n_GPi, n_SNc, n_PTN, n_PTI, n_PSN, n_Th, n_CMPf );
-        fprintf( n_Th -> file2, "%d %f\n", nt, n_Th -> ig[ 0 ] );
-        fprintf( n_CMPf -> file2, "%d %f\n", nt, n_Th -> ig[ 1 ] );
         updatePotential( nt, n_MSN_D1, n_MSN_D2, n_FSI, n_STN, n_GPe, n_GPi, n_SNc, n_PTN, n_PTI, n_Th );
-        fprintf( n_Th -> file1, "%d %f\n", nt, n_Th -> v[ 0 ] );
-        fprintf( n_CMPf -> file1, "%d %f\n", nt, n_Th -> v[ 1 ] );
         input_neuron ( nt, n_PSN, n_CMPf );
         t_refr ( n_MSN_D1, n_MSN_D2, n_FSI, n_STN, n_GPe, n_GPi, n_SNc, n_PTN, n_PTI, n_Th );
     }
@@ -157,13 +153,7 @@ void loop( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI, neuron_t *n_
 
         updateSynapse ( nt, n_MSN_D1, n_MSN_D2, n_FSI, n_STN, n_GPe, n_GPi, n_SNc, n_PTN, n_PTI, n_PSN, n_Th, n_CMPf );
         InputSynapsePotential ( nt, n_MSN_D1, n_MSN_D2, n_FSI, n_STN, n_GPe, n_GPi, n_SNc, n_PTN, n_PTI, n_PSN, n_Th, n_CMPf );
-        fprintf( n_Th -> file2, "%d %f\n", nt, n_Th -> ig[ 0 ] );
-        fprintf( n_CMPf -> file2, "%d %f\n", nt, n_Th -> ig[ 1 ] );
-        fprintf( n_PSN -> file2, "%d %f\n", nt, n_Th -> ig[ 2 ] );
         updatePotential( nt, n_MSN_D1, n_MSN_D2, n_FSI, n_STN, n_GPe, n_GPi, n_SNc, n_PTN, n_PTI, n_Th );
-        fprintf( n_Th -> file1, "%d %f\n", nt, n_Th -> v[ 0 ] );
-        fprintf( n_CMPf -> file1, "%d %f\n", nt, n_Th -> v[ 1 ] );
-        fprintf( n_PSN -> file1, "%d %f\n", nt, n_Th -> v[ 2 ] );
         input_neuron ( nt, n_PSN, n_CMPf );
         t_refr ( n_MSN_D1, n_MSN_D2, n_FSI, n_STN, n_GPe, n_GPi, n_SNc, n_PTN, n_PTI, n_Th );
         outputSpike ( nt, n_MSN_D1, n_MSN_D2, n_FSI, n_STN, n_GPe, n_GPi, n_SNc, n_PTN, n_PTI, n_PSN, n_Th, n_CMPf );
@@ -174,13 +164,7 @@ void loop( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI, neuron_t *n_
 
         updateSynapse ( nt, n_MSN_D1, n_MSN_D2, n_FSI, n_STN, n_GPe, n_GPi, n_SNc, n_PTN, n_PTI, n_PSN, n_Th, n_CMPf );
         InputSynapsePotential ( nt, n_MSN_D1, n_MSN_D2, n_FSI, n_STN, n_GPe, n_GPi, n_SNc, n_PTN, n_PTI, n_PSN, n_Th, n_CMPf );
-        fprintf( n_Th -> file2, "%d %f\n", nt, n_Th -> ig[ 0 ] );
-        fprintf( n_CMPf -> file2, "%d %f\n", nt, n_Th -> ig[ 1 ] );
-        fprintf( n_PSN -> file2, "%d %f\n", nt, n_Th -> ig[ 2 ] );
         updatePotential( nt, n_MSN_D1, n_MSN_D2, n_FSI, n_STN, n_GPe, n_GPi, n_SNc, n_PTN, n_PTI, n_Th );
-        fprintf( n_Th -> file1, "%d %f\n", nt, n_Th -> v[ 0 ] );
-        fprintf( n_CMPf -> file1, "%d %f\n", nt, n_Th -> v[ 1 ] );
-        fprintf( n_PSN -> file1, "%d %f\n", nt, n_Th -> v[ 2 ] );
         input_neuron ( nt, n_PSN, n_CMPf );
         t_refr ( n_MSN_D1, n_MSN_D2, n_FSI, n_STN, n_GPe, n_GPi, n_SNc, n_PTN, n_PTI, n_Th );
         outputSpike ( nt, n_MSN_D1, n_MSN_D2, n_FSI, n_STN, n_GPe, n_GPi, n_SNc, n_PTN, n_PTI, n_PSN, n_Th, n_CMPf );
@@ -191,13 +175,7 @@ void loop( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI, neuron_t *n_
 
         updateSynapse ( nt, n_MSN_D1, n_MSN_D2, n_FSI, n_STN, n_GPe, n_GPi, n_SNc, n_PTN, n_PTI, n_PSN, n_Th, n_CMPf );
         InputSynapsePotential ( nt, n_MSN_D1, n_MSN_D2, n_FSI, n_STN, n_GPe, n_GPi, n_SNc, n_PTN, n_PTI, n_PSN, n_Th, n_CMPf );
-        fprintf( n_Th -> file2, "%d %f\n", nt, n_Th -> ig[ 0 ] );
-        fprintf( n_CMPf -> file2, "%d %f\n", nt, n_Th -> ig[ 1 ] );
-        fprintf( n_PSN -> file2, "%d %f\n", nt, n_Th -> ig[ 2 ] );
         updatePotential( nt, n_MSN_D1, n_MSN_D2, n_FSI, n_STN, n_GPe, n_GPi, n_SNc, n_PTN, n_PTI, n_Th );
-        fprintf( n_Th -> file1, "%d %f\n", nt, n_Th -> v[ 0 ] );
-        fprintf( n_CMPf -> file1, "%d %f\n", nt, n_Th -> v[ 1 ] );
-        fprintf( n_PSN -> file1, "%d %f\n", nt, n_Th -> v[ 2 ] );
         input_neuron ( nt, n_PSN, n_CMPf );
         t_refr ( n_MSN_D1, n_MSN_D2, n_FSI, n_STN, n_GPe, n_GPi, n_SNc, n_PTN, n_PTI, n_Th );
         outputSpike ( nt, n_MSN_D1, n_MSN_D2, n_FSI, n_STN, n_GPe, n_GPi, n_SNc, n_PTN, n_PTI, n_PSN, n_Th, n_CMPf );

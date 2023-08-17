@@ -133,6 +133,18 @@ void t_refr ( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI, neuron_t 
     cudaDeviceSynchronize ( );
 }
 
+void Spike_counting ( neuron_t *n_GPi ){
+
+    //GPi
+    for ( int i = 0; i < N_GPi; i++ ){
+
+        if ( n_GPi -> s[ i ] ){
+
+            n_GPi -> counter[ i ]++;
+        }
+    }
+}
+
 //ループ
 void loop( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI, neuron_t *n_STN, neuron_t *n_GPe, neuron_t *n_GPi, neuron_t *n_SNc, neuron_t *n_PTN, neuron_t *n_PTI, neuron_t *n_PSN, neuron_t *n_Th, neuron_t *n_CMPf, int W_1, int W_2 ){
     
@@ -156,7 +168,7 @@ void loop( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI, neuron_t *n_
         updatePotential( nt, n_MSN_D1, n_MSN_D2, n_FSI, n_STN, n_GPe, n_GPi, n_SNc, n_PTN, n_PTI, n_Th );
         input_neuron ( nt, n_PSN, n_CMPf );
         t_refr ( n_MSN_D1, n_MSN_D2, n_FSI, n_STN, n_GPe, n_GPi, n_SNc, n_PTN, n_PTI, n_Th );
-        outputSpike ( nt, n_MSN_D1, n_MSN_D2, n_FSI, n_STN, n_GPe, n_GPi, n_SNc, n_PTN, n_PTI, n_PSN, n_Th, n_CMPf );
+        Spike_counting ( n_GPi );
     }
 
     //ActionSelectionあり
@@ -167,7 +179,7 @@ void loop( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI, neuron_t *n_
         updatePotential( nt, n_MSN_D1, n_MSN_D2, n_FSI, n_STN, n_GPe, n_GPi, n_SNc, n_PTN, n_PTI, n_Th );
         change_input_neuron ( nt, n_PSN, n_CMPf, W_1, W_2 );
         t_refr ( n_MSN_D1, n_MSN_D2, n_FSI, n_STN, n_GPe, n_GPi, n_SNc, n_PTN, n_PTI, n_Th );
-        outputSpike ( nt, n_MSN_D1, n_MSN_D2, n_FSI, n_STN, n_GPe, n_GPi, n_SNc, n_PTN, n_PTI, n_PSN, n_Th, n_CMPf );
+        Spike_counting ( n_GPi );
     }
 
     //ActionSelectionなし
@@ -178,14 +190,14 @@ void loop( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI, neuron_t *n_
         updatePotential( nt, n_MSN_D1, n_MSN_D2, n_FSI, n_STN, n_GPe, n_GPi, n_SNc, n_PTN, n_PTI, n_Th );
         input_neuron ( nt, n_PSN, n_CMPf );
         t_refr ( n_MSN_D1, n_MSN_D2, n_FSI, n_STN, n_GPe, n_GPi, n_SNc, n_PTN, n_PTI, n_Th );
-        outputSpike ( nt, n_MSN_D1, n_MSN_D2, n_FSI, n_STN, n_GPe, n_GPi, n_SNc, n_PTN, n_PTI, n_PSN, n_Th, n_CMPf );
+        Spike_counting ( n_GPi );
     }
 
     double elapsedTime = timer_elapsed ();
 
     printf ( "Elapsed time = %f sec.\n", elapsedTime );
 
-    outputFiringRate ( n_MSN_D1, n_MSN_D2, n_FSI, n_STN, n_GPe, n_GPi, n_SNc, n_PTN, n_PTI, n_PSN, n_Th, n_CMPf );
+    outputFiringRate ( n_GPi );
     initalize_Neuron ( n_MSN_D1, n_MSN_D2, n_FSI, n_STN, n_GPe, n_GPi, n_SNc, n_PTN, n_PTI, n_PSN, n_Th, n_CMPf );
     initalize_selection ( n_PSN );
 }

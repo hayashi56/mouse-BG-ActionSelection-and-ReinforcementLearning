@@ -54,9 +54,7 @@ int main( void ){
   // 1s(1000ms)のシミュレーションを行う関数
   for ( int i = 0; i < N_i; i++ ){
     for ( int j = 0; j < N_i; j++ ){
-      fileopen_spike( msn_d1, msn_d2, fsi, stn, gpe, gpi, snc, ptn, pti, psn, th, cmpf, i , j );
       loop ( msn_d1, msn_d2, fsi, stn, gpe, gpi, snc, ptn, pti, psn, th, cmpf, i , j );
-      fileclose_spike( msn_d1, msn_d2, fsi, stn, gpe, gpi, snc, ptn, pti, psn, th, cmpf );
     }
   }
 

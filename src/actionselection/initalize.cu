@@ -20,32 +20,6 @@ void file_open ( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI, neuron
     n_PSN -> file = fopen ( "PSNspike.dat", "w" );
     n_Th -> file = fopen ( "Thspike.dat", "w" );
     n_CMPf -> file = fopen ( "CMPfspike.dat", "w" );
-
-    // n_MSN_D1 -> file1 = fopen ( "MSN_D1debag.dat", "w" );
-    // n_MSN_D2 -> file1 = fopen ( "MSN_D2debag.dat", "w" );
-    // n_FSI -> file1 = fopen ( "FSIdebag.dat", "w" );
-    // n_STN -> file1 = fopen ( "STNdebag.dat", "w" );
-    // n_GPe -> file1 = fopen ( "GPedebag.dat", "w" );
-    // n_GPi -> file1 = fopen ( "GPidebag.dat", "w" );
-    // n_SNc -> file1 = fopen ( "SNcdebag.dat", "w" );
-    // n_PTN -> file1 = fopen ( "PTNdebag.dat", "w" );
-    // n_PTI -> file1 = fopen ( "PTIdebag.dat", "w" );
-    n_PSN -> file1 = fopen ( "PSNdebag.dat", "w" );
-    n_Th -> file1 = fopen ( "Thdebag.dat", "w" );
-    n_CMPf -> file1 = fopen ( "CMPfdebag.dat", "w" );
-
-    //n_MSN_D1 -> file2 = fopen ( "MSN_D1.dat", "w" );
-    //n_MSN_D2 -> file2 = fopen ( "MSN_D2.dat", "w" );
-    //n_FSI -> file2 = fopen ( "FSI.dat", "w" );
-    //n_STN -> file2 = fopen ( "STN.dat", "w" );
-    //n_GPe -> file2 = fopen ( "GPe.dat", "w" );
-    //n_GPi -> file2 = fopen ( "GPi.dat", "w" );
-    //n_SNc -> file2 = fopen ( "SNc.dat", "w" );
-    //n_PTN -> file2 = fopen ( "PTN.dat", "w" );
-    //n_PTI -> file2 = fopen ( "PTI.dat", "w" );
-    n_PSN -> file2 = fopen ( "PSN.dat", "w" );
-    n_Th -> file2 = fopen ( "Th.dat", "w" );
-    n_CMPf -> file2 = fopen ( "CMPf.dat", "w" );
 }
 
 void Allocating_Neuron ( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI, neuron_t *n_STN, neuron_t *n_GPe, neuron_t *n_GPi, neuron_t *n_SNc, neuron_t *n_PTN, neuron_t *n_PTI, neuron_t *n_PSN, neuron_t *n_Th, neuron_t *n_CMPf ){

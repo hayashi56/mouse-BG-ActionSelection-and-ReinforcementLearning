@@ -9,19 +9,17 @@ void outputFiringRate ( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
     float mean = 0;
     //MSN_D1
     for ( int i = 0; i < N_MSN_D1; i++ ){
-        mean += n_MSN_D1 -> counter[ i ]; 
+        mean += n_MSN_D1 -> counter[ i ];
     }
     mean = mean / N_MSN_D1;
-    // fprintf ( n_MSN_D1 -> file1, "%f\n", mean );
     printf( "MSND1:%fHz\n", mean );
 
     //MSN_D2
     mean = 0;
     for ( int i = 0; i < N_MSN_D2; i++ ){
-        mean += n_MSN_D2 -> counter[ i ]; 
+        mean += n_MSN_D2 -> counter[ i ];
     }
     mean = mean / N_MSN_D2;
-    // fprintf ( n_MSN_D2 -> file1, "%f\n", mean );
     printf( "MSND2:%fHz\n", mean );
 
     //FSI
@@ -30,7 +28,6 @@ void outputFiringRate ( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
         mean += n_FSI -> counter[ i ];
     }
     mean = mean / N_FSI;
-    // fprintf ( n_FSI -> file1, "%f\n", mean );
     printf( "FSI:%fHz\n", mean );
 
 
@@ -40,7 +37,6 @@ void outputFiringRate ( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
         mean += n_STN -> counter[ i ];
     }
     mean = mean / N_STN;
-    // fprintf ( n_STN -> file1, "%f\n", mean );
     printf( "STN:%fHz\n", mean );
 
     //GPe
@@ -49,7 +45,6 @@ void outputFiringRate ( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
         mean += n_GPe -> counter[ i ];
     }
     mean = mean / N_GPe;
-    // fprintf ( n_GPe -> file1, "%f\n", mean );
     printf( "GPe:%fHz\n", mean );
 
     //GPi
@@ -58,7 +53,6 @@ void outputFiringRate ( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
         mean += n_GPi -> counter[ i ];
     }
     mean = mean / N_GPi;
-    // fprintf ( n_GPi -> file1, "%f\n", mean );
     printf( "GPi:%fHz\n", mean );
 
     //SNc
@@ -67,7 +61,6 @@ void outputFiringRate ( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
         mean += n_SNc -> counter[ i ];
     }
     mean = mean / N_SNc;
-    // fprintf ( n_SNc -> file1, "%f\n", mean );
     printf( "SNc:%fHz\n", mean );
 
     //PTN
@@ -76,7 +69,6 @@ void outputFiringRate ( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
         mean += n_PTN -> counter[ i ];
     }
     mean = mean / N_PTN;
-    // fprintf ( n_PTN -> file1, "%f\n", mean );
     printf( "PTN:%fHz\n", mean );
 
     //PTI
@@ -85,7 +77,6 @@ void outputFiringRate ( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
         mean += n_PTI -> counter[ i ];
     }
     mean = mean / N_PTI;
-    // fprintf ( n_PTI -> file1, "%f\n", mean );
     printf( "PTI:%fHz\n", mean );
 
     //PSN
@@ -94,7 +85,6 @@ void outputFiringRate ( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
         mean += n_PSN -> counter[ i ];
     }
     mean = mean / N_PSN;
-    // fprintf ( n_PSN -> file1, "%f\n", mean );
     printf( "PSN:%fHz\n", mean );
 
     //Th
@@ -103,7 +93,6 @@ void outputFiringRate ( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
         mean += n_Th -> counter[ i ];
     }
     mean = mean / N_Th;
-    // fprintf ( n_Th -> file1, "%f\n", mean );
     printf( "Th:%fHz\n", mean );
 
     //CMPf
@@ -112,7 +101,6 @@ void outputFiringRate ( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
         mean += n_CMPf -> counter[ i ];
     }
     mean = mean / N_CMPf;
-    // fprintf ( n_CMPf -> file1, "%f\n", mean );
     printf( "CMPf:%fHz\n", mean );
 }
 

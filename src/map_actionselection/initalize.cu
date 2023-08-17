@@ -12,46 +12,6 @@ void file_open ( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI, neuron
     n_GPi -> file2 = fopen ( "GPifiringrate_chanel2.dat", "w" );
 }
 
-void fileopen_spike ( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI, neuron_t *n_STN, neuron_t *n_GPe, neuron_t *n_GPi, neuron_t *n_SNc, neuron_t *n_PTN, neuron_t *n_PTI, neuron_t *n_PSN, neuron_t *n_Th, neuron_t *n_CMPf, int i, int j ){
-
-    char filename_MSND1 [ 256 ];
-    char filename_MSND2 [ 256 ];
-    char filename_FSI [ 256 ];
-    char filename_STN [ 256 ];
-    char filename_GPe [ 256 ];
-    char filename_GPi [ 256 ];
-    char filename_SNc [ 256 ];
-    char filename_PTN [ 256 ];
-    char filename_PTI [ 256 ];
-    char filename_PSN [ 256 ];
-    char filename_Th [ 256 ];
-    char filename_CMPf [ 256 ];
-    sprintf( filename_MSND1, "MSN_D1spike_chanel1%dchanel2%d.dat", i, j );
-    sprintf( filename_MSND2, "MSN_D2spike_chanel1%dchanel2%d.dat", i, j );
-    sprintf( filename_FSI, "FSIspike_chanel1%dchanel2%d.dat", i, j );
-    sprintf( filename_STN, "STNspike_chanel1%dchanel2%d.dat", i, j );
-    sprintf( filename_GPe, "GPespike_chanel1%dchanel2%d.dat", i, j );
-    sprintf( filename_GPi, "GPispike_chanel1%dchanel2%d.dat", i, j );
-    sprintf( filename_SNc, "SNcspike_chanel1%dchanel2%d.dat", i, j );
-    sprintf( filename_PTN, "PTNspike_chanel1%dchanel2%d.dat", i, j );
-    sprintf( filename_PTI, "PTIspike_chanel1%dchanel2%d.dat", i, j );
-    sprintf( filename_PSN, "PSNspike_chanel1%dchanel2%d.dat", i, j );
-    sprintf( filename_Th, "Thspike_chanel1%dchanel2%d.dat", i, j );
-    sprintf( filename_CMPf, "CMPfspike_chanel1%dchanel2%d.dat", i, j );
-    n_MSN_D1 -> file = fopen ( filename_MSND1, "w" );
-    n_MSN_D2 -> file = fopen ( filename_MSND2, "w" );
-    n_FSI -> file = fopen ( filename_FSI, "w" );
-    n_STN -> file = fopen ( filename_STN, "w" );
-    n_GPe -> file = fopen ( filename_GPe, "w" );
-    n_GPi -> file = fopen ( filename_GPi, "w" );
-    n_SNc -> file = fopen ( filename_SNc, "w" );
-    n_PTN -> file = fopen ( filename_PTN, "w" );
-    n_PTI -> file = fopen ( filename_PTI, "w" );
-    n_PSN -> file = fopen ( filename_PSN, "w" );
-    n_Th -> file = fopen ( filename_Th, "w" );
-    n_CMPf -> file = fopen ( filename_CMPf, "w" );
-}
-
 void Allocating_Neuron ( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI, neuron_t *n_STN, neuron_t *n_GPe, neuron_t *n_GPi, neuron_t *n_SNc, neuron_t *n_PTN, neuron_t *n_PTI, neuron_t *n_PSN, neuron_t *n_Th, neuron_t *n_CMPf ){
 
     cudaMallocManaged ( &n_MSN_D1 -> v, sizeof ( float ) * N_MSN_D1 );
