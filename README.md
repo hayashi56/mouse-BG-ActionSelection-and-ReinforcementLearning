@@ -66,7 +66,7 @@ rm -f *.dat
 ```
 parametar.pdf : マウスの大脳基底核における解剖学的、電気⽣理学的データをもとにして定義したパラメータのまとめ
 src/ : ソースコード
-src/actionselection/bcbg.cu : 
+src/actionselection/bcbg.cu : 行動選択を行うシミュレーションプログラムのメイン文が書かれているファイル
 src/actionselection/param.h : 解剖学的・電気生理学的報告によるパラメータやシミュレーションに関するパラメータ(神経細胞の活動時間等)の定義が書かれているファイル
 src/actionselection/structure.cu : 構造体の定義やメモリの開放やファイルのクローズする関数が書かれているファイル
 src/actionselection/initalize.cu : 初期化、メモリ確保、ファイルをオープンする関数が書かれているファイル
@@ -75,4 +75,16 @@ src/actionselection/update.cu : 時間変化による膜電位の更新や入力
 src/actionselection/output.cu : 出力に関する関数が書かれているファイル
 src/actionselection/function.cu : シミュレーションを行う関数やその他の関数が書かれているファイル
 src/actionselection/rasterplot.ipynb : シミュレーション結果をグラフにプロットするファイル
+src/actionselection/bcbg.cu : 行動選択を行うシミュレーションプログラムのメイン文が書かれているファイル
+
+src/actionselection/param.h : 解剖学的・電気生理学的報告によるパラメータやシミュレーションに関するパラメータ(神経細胞の活動時間等)の定義が書かれているファイル
+src/actionselection/structure.cu : 構造体の定義やメモリの開放やファイルのクローズする関数が書かれているファイル
+src/actionselection/initalize.cu : 初期化、メモリ確保、ファイルをオープンする関数が書かれているファイル
+src/actionselection/synapse_function.cu : シナプス結合の更新に関する関数が書かれているファイル
+src/actionselection/update.cu : 時間変化による膜電位の更新や入力の神経細胞の活動に関する関数が書かれているファイル
+src/actionselection/output.cu : 出力に関する関数が書かれているファイル
+src/actionselection/function.cu : シミュレーションを行う関数やその他の関数が書かれているファイル
+src/actionselection/rasterplot.ipynb : シミュレーション結果をグラフにプロットするファイル
+src/actionselection/bcbg.cu : 行動選択を行うシミュレーションプログラムのメイン文が書かれているファイル
+
 ```
