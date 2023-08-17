@@ -168,7 +168,7 @@ void updatePotential ( int nt, neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t 
 change_input_neuronは入力を安静時の発火率から変化させ、入力に選択肢の選択性を提示する関数
 input_neuronは入力を安静時の発火率で行う関数
 */
-void change_input_neuron ( int nt, neuron_t *n_PSN, neuron_t *n_CMPf, int W_1, int W_2 ){
+void change_input_neuron ( int nt, neuron_t *n_PSN, neuron_t *n_CMPf, int chanel1, int chanel2 ){
 
 
     int i;
@@ -178,140 +178,140 @@ void change_input_neuron ( int nt, neuron_t *n_PSN, neuron_t *n_CMPf, int W_1, i
     for ( i = 0; i < per_chanel_N_PSN; i++ ){
 
         double r = sfmt_genrand_real2 ( &( n_PSN -> rng ) );
-        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * chanel1 ) / N_i ) * n_PSN -> select[ i ] );
+        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * chanel1 ) / N_change ) * n_PSN -> select[ i ] );
         n_PSN -> ts[ i ] = ( n_PSN -> s[ i ] ) * ( nt + 1 ) + ( !( n_PSN -> s[ i ] ) ) * ( n_PSN -> ts[ i ] );
     }
     // 選択肢2
     for ( ; i < per_chanel_N_PSN * 2; i++ ){
 
         double r = sfmt_genrand_real2 ( &( n_PSN -> rng ) );
-        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * chanel2 ) / N_i ) * n_PSN -> select[ i ] );
+        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * chanel2 ) / N_change ) * n_PSN -> select[ i ] );
         n_PSN -> ts[ i ] = ( n_PSN -> s[ i ] ) * ( nt + 1 ) + ( !( n_PSN -> s[ i ] ) ) * ( n_PSN -> ts[ i ] );
     }
     // 選択肢3
     for ( ; i < per_chanel_N_PSN * 3; i++ ){
 
         double r = sfmt_genrand_real2 ( &( n_PSN -> rng ) );
-        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * chanel3 ) / N_i ) * n_PSN -> select[ i ] );
+        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * chanel3 ) / N_change ) * n_PSN -> select[ i ] );
         n_PSN -> ts[ i ] = ( n_PSN -> s[ i ] ) * ( nt + 1 ) + ( !( n_PSN -> s[ i ] ) ) * ( n_PSN -> ts[ i ] );
     }
     // 選択肢4
     for ( ; i < per_chanel_N_PSN * 4; i++ ){
 
         double r = sfmt_genrand_real2 ( &( n_PSN -> rng ) );
-        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * chanel4 ) / N_i ) * n_PSN -> select[ i ] );
+        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * chanel4 ) / N_change ) * n_PSN -> select[ i ] );
         n_PSN -> ts[ i ] = ( n_PSN -> s[ i ] ) * ( nt + 1 ) + ( !( n_PSN -> s[ i ] ) ) * ( n_PSN -> ts[ i ] );
     }
     // 選択肢5
     for ( ; i < per_chanel_N_PSN * 5; i++ ){
 
         double r = sfmt_genrand_real2 ( &( n_PSN -> rng ) );
-        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * chanel5 ) / N_i ) * n_PSN -> select[ i ] );
+        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * chanel5 ) / N_change ) * n_PSN -> select[ i ] );
         n_PSN -> ts[ i ] = ( n_PSN -> s[ i ] ) * ( nt + 1 ) + ( !( n_PSN -> s[ i ] ) ) * ( n_PSN -> ts[ i ] );
     }
     // 選択肢6
     for ( ; i < per_chanel_N_PSN * 6; i++ ){
 
         double r = sfmt_genrand_real2 ( &( n_PSN -> rng ) );
-        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * chanel6 ) / N_i ) * n_PSN -> select[ i ] );
+        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * chanel6 ) / N_change ) * n_PSN -> select[ i ] );
         n_PSN -> ts[ i ] = ( n_PSN -> s[ i ] ) * ( nt + 1 ) + ( !( n_PSN -> s[ i ] ) ) * ( n_PSN -> ts[ i ] );
     }
     // 選択肢7
     for ( ; i < per_chanel_N_PSN * 7; i++ ){
 
         double r = sfmt_genrand_real2 ( &( n_PSN -> rng ) );
-        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * chanel7 ) / N_i ) * n_PSN -> select[ i ] );
+        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * chanel7 ) / N_change ) * n_PSN -> select[ i ] );
         n_PSN -> ts[ i ] = ( n_PSN -> s[ i ] ) * ( nt + 1 ) + ( !( n_PSN -> s[ i ] ) ) * ( n_PSN -> ts[ i ] );
     }
     // 選択肢8
     for ( ; i < per_chanel_N_PSN * 8; i++ ){
 
         double r = sfmt_genrand_real2 ( &( n_PSN -> rng ) );
-        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * chanel8 ) / N_i ) * n_PSN -> select[ i ] );
+        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * chanel8 ) / N_change ) * n_PSN -> select[ i ] );
         n_PSN -> ts[ i ] = ( n_PSN -> s[ i ] ) * ( nt + 1 ) + ( !( n_PSN -> s[ i ] ) ) * ( n_PSN -> ts[ i ] );
     }
     // 選択肢9
     for ( ; i < per_chanel_N_PSN * 9; i++ ){
 
         double r = sfmt_genrand_real2 ( &( n_PSN -> rng ) );
-        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * chanel9 ) / N_i ) * n_PSN -> select[ i ] );
+        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * chanel9 ) / N_change ) * n_PSN -> select[ i ] );
         n_PSN -> ts[ i ] = ( n_PSN -> s[ i ] ) * ( nt + 1 ) + ( !( n_PSN -> s[ i ] ) ) * ( n_PSN -> ts[ i ] );
     }
     // 選択肢10
     for ( ; i < per_chanel_N_PSN * 10; i++ ){
 
         double r = sfmt_genrand_real2 ( &( n_PSN -> rng ) );
-        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * W_1 ) / N_i ) * n_PSN -> select[ i ] );
+        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * chanel1 ) / N_change ) * n_PSN -> select[ i ] );
         n_PSN -> ts[ i ] = ( n_PSN -> s[ i ] ) * ( nt + 1 ) + ( !( n_PSN -> s[ i ] ) ) * ( n_PSN -> ts[ i ] );
     }
     // 選択肢11
     for ( ; i < per_chanel_N_PSN * 11; i++ ){
 
         double r = sfmt_genrand_real2 ( &( n_PSN -> rng ) );
-        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * W_2 ) / N_i ) * n_PSN -> select[ i ] );
+        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * chanel2 ) / N_change ) * n_PSN -> select[ i ] );
         n_PSN -> ts[ i ] = ( n_PSN -> s[ i ] ) * ( nt + 1 ) + ( !( n_PSN -> s[ i ] ) ) * ( n_PSN -> ts[ i ] );
     }
     // 選択肢12
     for ( ; i < per_chanel_N_PSN * 12; i++ ){
 
         double r = sfmt_genrand_real2 ( &( n_PSN -> rng ) );
-        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * chanel12 ) / N_i ) * n_PSN -> select[ i ] );
+        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * chanel12 ) / N_change ) * n_PSN -> select[ i ] );
         n_PSN -> ts[ i ] = ( n_PSN -> s[ i ] ) * ( nt + 1 ) + ( !( n_PSN -> s[ i ] ) ) * ( n_PSN -> ts[ i ] );
     }
     // 選択肢13
     for ( ; i < per_chanel_N_PSN * 13; i++ ){
 
         double r = sfmt_genrand_real2 ( &( n_PSN -> rng ) );
-        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * chanel13 ) / N_i ) * n_PSN -> select[ i ] );
+        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * chanel13 ) / N_change ) * n_PSN -> select[ i ] );
         n_PSN -> ts[ i ] = ( n_PSN -> s[ i ] ) * ( nt + 1 ) + ( !( n_PSN -> s[ i ] ) ) * ( n_PSN -> ts[ i ] );
     }
     // 選択肢14
     for ( ; i < per_chanel_N_PSN * 14; i++ ){
 
         double r = sfmt_genrand_real2 ( &( n_PSN -> rng ) );
-        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * chanel14 ) / N_i ) * n_PSN -> select[ i ] );
+        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * chanel14 ) / N_change ) * n_PSN -> select[ i ] );
         n_PSN -> ts[ i ] = ( n_PSN -> s[ i ] ) * ( nt + 1 ) + ( !( n_PSN -> s[ i ] ) ) * ( n_PSN -> ts[ i ] );
     }
     // 選択肢15
     for ( ; i < per_chanel_N_PSN * 15; i++ ){
 
         double r = sfmt_genrand_real2 ( &( n_PSN -> rng ) );
-        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * chanel15 ) / N_i ) * n_PSN -> select[ i ] );
+        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * chanel15 ) / N_change ) * n_PSN -> select[ i ] );
         n_PSN -> ts[ i ] = ( n_PSN -> s[ i ] ) * ( nt + 1 ) + ( !( n_PSN -> s[ i ] ) ) * ( n_PSN -> ts[ i ] );
     }
     // 選択肢16
     for ( ; i < per_chanel_N_PSN * 16; i++ ){
 
         double r = sfmt_genrand_real2 ( &( n_PSN -> rng ) );
-        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * chanel16 ) / N_i ) * n_PSN -> select[ i ] );
+        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * chanel16 ) / N_change ) * n_PSN -> select[ i ] );
         n_PSN -> ts[ i ] = ( n_PSN -> s[ i ] ) * ( nt + 1 ) + ( !( n_PSN -> s[ i ] ) ) * ( n_PSN -> ts[ i ] );
     }
     // 選択肢17
     for ( ; i < per_chanel_N_PSN * 17; i++ ){
 
         double r = sfmt_genrand_real2 ( &( n_PSN -> rng ) );
-        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * chanel17 ) / N_i ) * n_PSN -> select[ i ] );
+        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * chanel17 ) / N_change ) * n_PSN -> select[ i ] );
         n_PSN -> ts[ i ] = ( n_PSN -> s[ i ] ) * ( nt + 1 ) + ( !( n_PSN -> s[ i ] ) ) * ( n_PSN -> ts[ i ] );
     }
     // 選択肢18
     for ( ; i < per_chanel_N_PSN * 18; i++ ){
 
         double r = sfmt_genrand_real2 ( &( n_PSN -> rng ) );
-        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * chanel18 ) / N_i ) * n_PSN -> select[ i ] );
+        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * chanel18 ) / N_change ) * n_PSN -> select[ i ] );
         n_PSN -> ts[ i ] = ( n_PSN -> s[ i ] ) * ( nt + 1 ) + ( !( n_PSN -> s[ i ] ) ) * ( n_PSN -> ts[ i ] );
     }
     // 選択肢19
     for ( ; i < per_chanel_N_PSN * 19; i++ ){
 
         double r = sfmt_genrand_real2 ( &( n_PSN -> rng ) );
-        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * chanel19 ) / N_i ) * n_PSN -> select[ i ] );
+        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * chanel19 ) / N_change ) * n_PSN -> select[ i ] );
         n_PSN -> ts[ i ] = ( n_PSN -> s[ i ] ) * ( nt + 1 ) + ( !( n_PSN -> s[ i ] ) ) * ( n_PSN -> ts[ i ] );
     }
     // 選択肢20
     for ( ; i < N_PSN; i++ ){
 
         double r = sfmt_genrand_real2 ( &( n_PSN -> rng ) );
-        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * chanel20 ) / N_i ) * n_PSN -> select[ i ] );
+        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * chanel20 ) / N_change ) * n_PSN -> select[ i ] );
         n_PSN -> ts[ i ] = ( n_PSN -> s[ i ] ) * ( nt + 1 ) + ( !( n_PSN -> s[ i ] ) ) * ( n_PSN -> ts[ i ] );
     }
 

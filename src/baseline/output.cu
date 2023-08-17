@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+// それぞれのニューロンについて発火の総数をニューロン数で割り、平均発火率を計算し標準出力する関数
 void outputFiringRate ( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI, neuron_t *n_STN, neuron_t *n_GPe, neuron_t *n_GPi, neuron_t *n_SNc, neuron_t *n_PTN, neuron_t *n_PTI, neuron_t *n_PSN, neuron_t *n_Th, neuron_t *n_CMPf ){
 
     float mean = 0;
@@ -104,6 +105,7 @@ void outputFiringRate ( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
     printf( "CMPf:%fHz\n", mean );
 }
 
+// それぞれのニューロンの発火について発火したときの時間と発火したニューロンの番号をファイルに出力する関数
 void outputSpike ( int nt, neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI, neuron_t *n_STN, neuron_t *n_GPe, neuron_t *n_GPi, neuron_t *n_SNc, neuron_t *n_PTN, neuron_t *n_PTI, neuron_t *n_PSN, neuron_t *n_Th, neuron_t *n_CMPf ){
 
     //MSN_D1
@@ -113,7 +115,7 @@ void outputSpike ( int nt, neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_F
 
             fprintf ( n_MSN_D1 -> file, "%f %d\n", DT * ( nt + 1 ) - FreeRun, i );
             n_MSN_D1 -> counter[ i ]++;
-        } // Spike time is not t but t + DT
+        }
     }
 
     //MSN_D2
@@ -123,7 +125,7 @@ void outputSpike ( int nt, neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_F
 
             fprintf ( n_MSN_D2 -> file, "%f %d\n", DT * ( nt + 1 ) - FreeRun, i );
             n_MSN_D2 -> counter[ i ]++;
-        } // Spike time is not t but t + DT
+        }
     }
 
     //FSI
@@ -133,7 +135,7 @@ void outputSpike ( int nt, neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_F
 
             fprintf ( n_FSI -> file, "%f %d\n", DT * ( nt + 1 ) - FreeRun, i );
             n_FSI -> counter[ i ]++;
-        } // Spike time is not t but t + DT
+        }
     }
 
     //STN
@@ -143,7 +145,7 @@ void outputSpike ( int nt, neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_F
 
             fprintf ( n_STN -> file, "%f %d\n", DT * ( nt + 1 ) - FreeRun, i );
             n_STN -> counter[ i ]++;
-        } // Spike time is not t but t + DT
+        }
     }
 
     //GPe
@@ -153,7 +155,7 @@ void outputSpike ( int nt, neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_F
 
             fprintf ( n_GPe -> file, "%f %d\n", DT * ( nt + 1 ) - FreeRun, i );
             n_GPe -> counter[ i ]++;
-        } // Spike time is not t but t + DT
+        }
     }
 
     //GPi
@@ -163,7 +165,7 @@ void outputSpike ( int nt, neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_F
 
             fprintf ( n_GPi -> file, "%f %d\n", DT * ( nt + 1 ) - FreeRun, i );
             n_GPi -> counter[ i ]++;
-        } // Spike time is not t but t + DT
+        }
     }
 
     //SNc
@@ -173,7 +175,7 @@ void outputSpike ( int nt, neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_F
 
             fprintf ( n_SNc -> file, "%f %d\n", DT * ( nt + 1 ) - FreeRun, i );
             n_SNc -> counter[ i ]++;
-        } // Spike time is not t but t + DT
+        }
     }
 
     //PTN
@@ -183,7 +185,7 @@ void outputSpike ( int nt, neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_F
 
             fprintf ( n_PTN -> file, "%f %d\n", DT * ( nt + 1 ) - FreeRun, i );
             n_PTN -> counter[ i ]++;
-        } // Spike time is not t but t + DT
+        }
     }
 
     //PTI
@@ -193,7 +195,7 @@ void outputSpike ( int nt, neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_F
 
             fprintf ( n_PTI -> file, "%f %d\n", DT * ( nt + 1 ) - FreeRun, i );
             n_PTI -> counter[ i ]++;
-        } // Spike time is not t but t + DT
+        }
     }
 
     //PSN
@@ -203,7 +205,7 @@ void outputSpike ( int nt, neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_F
 
             fprintf ( n_PSN -> file, "%f %d\n", DT * ( nt + 1 ) - FreeRun, i );
             n_PSN -> counter[ i ]++;
-        } // Spike time is not t but t + DT
+        }
     }
 
     //Th
@@ -213,7 +215,7 @@ void outputSpike ( int nt, neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_F
 
             fprintf ( n_Th -> file, "%f %d\n", DT * ( nt + 1 ) - FreeRun, i );
             n_Th -> counter[ i ]++;
-        } // Spike time is not t but t + DT
+        }
     }
 
     //CMPf
@@ -223,6 +225,6 @@ void outputSpike ( int nt, neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_F
 
             fprintf ( n_CMPf -> file, "%f %d\n", DT * ( nt + 1 ) - FreeRun, i );
             n_CMPf -> counter[ i ]++;
-        } // Spike time is not t but t + DT
+        }
     }
 }

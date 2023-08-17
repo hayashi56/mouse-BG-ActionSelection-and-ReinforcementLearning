@@ -136,7 +136,6 @@ __global__ void updatePotential_Th ( int nt, neuron_t *n_Th ){
     }
 }
 
-
 // 下記はLIF modelでの更新の関数をCPUで各ニューロンについて実行する関数
 void updatePotential ( int nt, neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI, neuron_t *n_STN, neuron_t *n_GPe, neuron_t *n_GPi, neuron_t *n_SNc, neuron_t *n_PTN, neuron_t *n_PTI, neuron_t *n_Th ){
 
@@ -163,173 +162,14 @@ void updatePotential ( int nt, neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t 
 }
 
 
-/*
-下記は外部入力を担っているニューロンをポアソンスパイクで再現した際の発火の有無を判定する関数で、
-change_input_neuronは入力を安静時の発火率から変化させ、入力に選択肢の選択性を提示する関数
-input_neuronは入力を安静時の発火率で行う関数
-*/
-void change_input_neuron ( int nt, neuron_t *n_PSN, neuron_t *n_CMPf ){
-
-
-    int i;
-
-    //PSNについて
-    // 選択肢1
-    for ( i = 0; i < per_chanel_N_PSN; i++ ){
-
-        double r = sfmt_genrand_real2 ( &( n_PSN -> rng ) );
-        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * chanel1 ) / N_i ) * n_PSN -> select[ i ] );
-        n_PSN -> ts[ i ] = ( n_PSN -> s[ i ] ) * ( nt + 1 ) + ( !( n_PSN -> s[ i ] ) ) * ( n_PSN -> ts[ i ] );
-    }
-    // 選択肢2
-    for ( ; i < per_chanel_N_PSN * 2; i++ ){
-
-        double r = sfmt_genrand_real2 ( &( n_PSN -> rng ) );
-        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * chanel2 ) / N_i ) * n_PSN -> select[ i ] );
-        n_PSN -> ts[ i ] = ( n_PSN -> s[ i ] ) * ( nt + 1 ) + ( !( n_PSN -> s[ i ] ) ) * ( n_PSN -> ts[ i ] );
-    }
-    // 選択肢3
-    for ( ; i < per_chanel_N_PSN * 3; i++ ){
-
-        double r = sfmt_genrand_real2 ( &( n_PSN -> rng ) );
-        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * chanel3 ) / N_i ) * n_PSN -> select[ i ] );
-        n_PSN -> ts[ i ] = ( n_PSN -> s[ i ] ) * ( nt + 1 ) + ( !( n_PSN -> s[ i ] ) ) * ( n_PSN -> ts[ i ] );
-    }
-    // 選択肢4
-    for ( ; i < per_chanel_N_PSN * 4; i++ ){
-
-        double r = sfmt_genrand_real2 ( &( n_PSN -> rng ) );
-        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * chanel4 ) / N_i ) * n_PSN -> select[ i ] );
-        n_PSN -> ts[ i ] = ( n_PSN -> s[ i ] ) * ( nt + 1 ) + ( !( n_PSN -> s[ i ] ) ) * ( n_PSN -> ts[ i ] );
-    }
-    // 選択肢5
-    for ( ; i < per_chanel_N_PSN * 5; i++ ){
-
-        double r = sfmt_genrand_real2 ( &( n_PSN -> rng ) );
-        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * chanel5 ) / N_i ) * n_PSN -> select[ i ] );
-        n_PSN -> ts[ i ] = ( n_PSN -> s[ i ] ) * ( nt + 1 ) + ( !( n_PSN -> s[ i ] ) ) * ( n_PSN -> ts[ i ] );
-    }
-    // 選択肢6
-    for ( ; i < per_chanel_N_PSN * 6; i++ ){
-
-        double r = sfmt_genrand_real2 ( &( n_PSN -> rng ) );
-        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * chanel6 ) / N_i ) * n_PSN -> select[ i ] );
-        n_PSN -> ts[ i ] = ( n_PSN -> s[ i ] ) * ( nt + 1 ) + ( !( n_PSN -> s[ i ] ) ) * ( n_PSN -> ts[ i ] );
-    }
-    // 選択肢7
-    for ( ; i < per_chanel_N_PSN * 7; i++ ){
-
-        double r = sfmt_genrand_real2 ( &( n_PSN -> rng ) );
-        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * chanel7 ) / N_i ) * n_PSN -> select[ i ] );
-        n_PSN -> ts[ i ] = ( n_PSN -> s[ i ] ) * ( nt + 1 ) + ( !( n_PSN -> s[ i ] ) ) * ( n_PSN -> ts[ i ] );
-    }
-    // 選択肢8
-    for ( ; i < per_chanel_N_PSN * 8; i++ ){
-
-        double r = sfmt_genrand_real2 ( &( n_PSN -> rng ) );
-        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * chanel8 ) / N_i ) * n_PSN -> select[ i ] );
-        n_PSN -> ts[ i ] = ( n_PSN -> s[ i ] ) * ( nt + 1 ) + ( !( n_PSN -> s[ i ] ) ) * ( n_PSN -> ts[ i ] );
-    }
-    // 選択肢9
-    for ( ; i < per_chanel_N_PSN * 9; i++ ){
-
-        double r = sfmt_genrand_real2 ( &( n_PSN -> rng ) );
-        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * chanel9 ) / N_i ) * n_PSN -> select[ i ] );
-        n_PSN -> ts[ i ] = ( n_PSN -> s[ i ] ) * ( nt + 1 ) + ( !( n_PSN -> s[ i ] ) ) * ( n_PSN -> ts[ i ] );
-    }
-    // 選択肢10
-    for ( ; i < per_chanel_N_PSN * 10; i++ ){
-
-        double r = sfmt_genrand_real2 ( &( n_PSN -> rng ) );
-        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * chanel10 ) / N_i ) * n_PSN -> select[ i ] );
-        n_PSN -> ts[ i ] = ( n_PSN -> s[ i ] ) * ( nt + 1 ) + ( !( n_PSN -> s[ i ] ) ) * ( n_PSN -> ts[ i ] );
-    }
-    // 選択肢11
-    for ( ; i < per_chanel_N_PSN * 11; i++ ){
-
-        double r = sfmt_genrand_real2 ( &( n_PSN -> rng ) );
-        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * chanel11 ) / N_i ) * n_PSN -> select[ i ] );
-        n_PSN -> ts[ i ] = ( n_PSN -> s[ i ] ) * ( nt + 1 ) + ( !( n_PSN -> s[ i ] ) ) * ( n_PSN -> ts[ i ] );
-    }
-    // 選択肢12
-    for ( ; i < per_chanel_N_PSN * 12; i++ ){
-
-        double r = sfmt_genrand_real2 ( &( n_PSN -> rng ) );
-        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * chanel12 ) / N_i ) * n_PSN -> select[ i ] );
-        n_PSN -> ts[ i ] = ( n_PSN -> s[ i ] ) * ( nt + 1 ) + ( !( n_PSN -> s[ i ] ) ) * ( n_PSN -> ts[ i ] );
-    }
-    // 選択肢13
-    for ( ; i < per_chanel_N_PSN * 13; i++ ){
-
-        double r = sfmt_genrand_real2 ( &( n_PSN -> rng ) );
-        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * chanel13 ) / N_i ) * n_PSN -> select[ i ] );
-        n_PSN -> ts[ i ] = ( n_PSN -> s[ i ] ) * ( nt + 1 ) + ( !( n_PSN -> s[ i ] ) ) * ( n_PSN -> ts[ i ] );
-    }
-    // 選択肢14
-    for ( ; i < per_chanel_N_PSN * 14; i++ ){
-
-        double r = sfmt_genrand_real2 ( &( n_PSN -> rng ) );
-        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * chanel14 ) / N_i ) * n_PSN -> select[ i ] );
-        n_PSN -> ts[ i ] = ( n_PSN -> s[ i ] ) * ( nt + 1 ) + ( !( n_PSN -> s[ i ] ) ) * ( n_PSN -> ts[ i ] );
-    }
-    // 選択肢15
-    for ( ; i < per_chanel_N_PSN * 15; i++ ){
-
-        double r = sfmt_genrand_real2 ( &( n_PSN -> rng ) );
-        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * chanel15 ) / N_i ) * n_PSN -> select[ i ] );
-        n_PSN -> ts[ i ] = ( n_PSN -> s[ i ] ) * ( nt + 1 ) + ( !( n_PSN -> s[ i ] ) ) * ( n_PSN -> ts[ i ] );
-    }
-    // 選択肢16
-    for ( ; i < per_chanel_N_PSN * 16; i++ ){
-
-        double r = sfmt_genrand_real2 ( &( n_PSN -> rng ) );
-        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * chanel16 ) / N_i ) * n_PSN -> select[ i ] );
-        n_PSN -> ts[ i ] = ( n_PSN -> s[ i ] ) * ( nt + 1 ) + ( !( n_PSN -> s[ i ] ) ) * ( n_PSN -> ts[ i ] );
-    }
-    // 選択肢17
-    for ( ; i < per_chanel_N_PSN * 17; i++ ){
-
-        double r = sfmt_genrand_real2 ( &( n_PSN -> rng ) );
-        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * chanel17 ) / N_i ) * n_PSN -> select[ i ] );
-        n_PSN -> ts[ i ] = ( n_PSN -> s[ i ] ) * ( nt + 1 ) + ( !( n_PSN -> s[ i ] ) ) * ( n_PSN -> ts[ i ] );
-    }
-    // 選択肢18
-    for ( ; i < per_chanel_N_PSN * 18; i++ ){
-
-        double r = sfmt_genrand_real2 ( &( n_PSN -> rng ) );
-        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * chanel18 ) / N_i ) * n_PSN -> select[ i ] );
-        n_PSN -> ts[ i ] = ( n_PSN -> s[ i ] ) * ( nt + 1 ) + ( !( n_PSN -> s[ i ] ) ) * ( n_PSN -> ts[ i ] );
-    }
-    // 選択肢19
-    for ( ; i < per_chanel_N_PSN * 19; i++ ){
-
-        double r = sfmt_genrand_real2 ( &( n_PSN -> rng ) );
-        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * chanel19 ) / N_i ) * n_PSN -> select[ i ] );
-        n_PSN -> ts[ i ] = ( n_PSN -> s[ i ] ) * ( nt + 1 ) + ( !( n_PSN -> s[ i ] ) ) * ( n_PSN -> ts[ i ] );
-    }
-    // 選択肢20
-    for ( ; i < N_PSN; i++ ){
-
-        double r = sfmt_genrand_real2 ( &( n_PSN -> rng ) );
-        n_PSN -> s[ i ] =  r < ( PHI_MIN_PSN + ( ( ( PHI_MAX_PSN - PHI_MIN_PSN ) * chanel20 ) / N_i ) * n_PSN -> select[ i ] );
-        n_PSN -> ts[ i ] = ( n_PSN -> s[ i ] ) * ( nt + 1 ) + ( !( n_PSN -> s[ i ] ) ) * ( n_PSN -> ts[ i ] );
-    }
-
-    //CMPfについて
-    for ( int i = 0; i < N_CMPf; i++ ){
-
-        double r = sfmt_genrand_real2 ( &( n_CMPf -> rng ) );
-        n_CMPf -> s[ i ] = ( r < PHI_CMPf );
-        n_CMPf -> ts[ i ] = ( n_CMPf -> s[ i ] ) * ( nt + 1 ) + ( !( n_CMPf -> s[ i ] ) ) * ( n_CMPf -> ts[ i ] );
-    }
-}
+// 下記は外部入力を担っているニューロンをポアソンスパイクで再現した際の発火の有無を判定する関数で、input_neuronは入力を安静時の発火率で行う関数
 void input_neuron ( int nt, neuron_t *n_PSN, neuron_t *n_CMPf ){
 
     //PSNについて
     for ( int i = 0; i < N_PSN; i++ ){
 
         double r = sfmt_genrand_real2 ( &( n_PSN -> rng ) );
-        n_PSN -> s[ i ] = ( r < PHI_MIN_PSN );
+        n_PSN -> s[ i ] = ( r < PHI_PSN );
         n_PSN -> ts[ i ] = ( n_PSN -> s[ i ] ) * ( nt + 1 ) + ( !( n_PSN -> s[ i ] ) ) * ( n_PSN -> ts[ i ] );
     }
     //CMPfについて

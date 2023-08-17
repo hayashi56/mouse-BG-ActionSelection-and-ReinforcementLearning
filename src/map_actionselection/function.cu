@@ -8,8 +8,7 @@
 extern "C" { void timer_start( void ); }
 extern "C" { double timer_elapsed( void ); }
 
-//不応期
-// MSN_D1
+// 積分発火型モデルで再現するそれぞれのニューロンの不応期を再現している関数
 __global__ void t_refr_MSN_D1 ( neuron_t *n_MSN_D1 ){
 
     long i = threadIdx.x + blockIdx.x * blockDim.x;
@@ -19,7 +18,6 @@ __global__ void t_refr_MSN_D1 ( neuron_t *n_MSN_D1 ){
         n_MSN_D1 -> refr [ i ] = ( n_MSN_D1 -> s [ i ] ) * ( T_REFR ) + ( !( n_MSN_D1 -> s [ i ] ) ) * ( ( n_MSN_D1 -> refr [ i ] ) - 1 ); // set counter
     }
 }
-// MSN_D2
 __global__ void t_refr_MSN_D2 ( neuron_t *n_MSN_D2 ){
 
     long i = threadIdx.x + blockIdx.x * blockDim.x;
@@ -29,7 +27,6 @@ __global__ void t_refr_MSN_D2 ( neuron_t *n_MSN_D2 ){
         n_MSN_D2 -> refr [ i ] = ( n_MSN_D2 -> s [ i ] ) * ( T_REFR ) + ( !( n_MSN_D2 -> s [ i ] ) ) * ( ( n_MSN_D2 -> refr [ i ] ) - 1 ); // set counter
     }
 }
-// FSI
 __global__ void t_refr_FSI ( neuron_t *n_FSI ){
 
     long i = threadIdx.x + blockIdx.x * blockDim.x;
@@ -39,7 +36,6 @@ __global__ void t_refr_FSI ( neuron_t *n_FSI ){
         n_FSI -> refr [ i ] = ( n_FSI -> s [ i ] ) * ( T_REFR ) + ( !( n_FSI -> s [ i ] ) ) * ( ( n_FSI -> refr [ i ] ) - 1 ); // set counter
     }
 }
-// STN
 __global__ void t_refr_STN ( neuron_t *n_STN ){
 
     long i = threadIdx.x + blockIdx.x * blockDim.x;
@@ -49,7 +45,6 @@ __global__ void t_refr_STN ( neuron_t *n_STN ){
         n_STN -> refr [ i ] = ( n_STN -> s [ i ] ) * ( T_REFR ) + ( !( n_STN -> s [ i ] ) ) * ( ( n_STN -> refr [ i ] ) - 1 ); // set counter
     }
 }
-// GPe
 __global__ void t_refr_GPe ( neuron_t *n_GPe ){
 
     long i = threadIdx.x + blockIdx.x * blockDim.x;
@@ -59,7 +54,6 @@ __global__ void t_refr_GPe ( neuron_t *n_GPe ){
         n_GPe -> refr [ i ] = ( n_GPe -> s [ i ] ) * ( T_REFR ) + ( !( n_GPe -> s [ i ] ) ) * ( ( n_GPe -> refr [ i ] ) - 1 ); // set counter
     }
 }
-// GPi
 __global__ void t_refr_GPi ( neuron_t *n_GPi ){
 
     long i = threadIdx.x + blockIdx.x * blockDim.x;
@@ -69,7 +63,6 @@ __global__ void t_refr_GPi ( neuron_t *n_GPi ){
         n_GPi -> refr [ i ] = ( n_GPi -> s [ i ] ) * ( T_REFR ) + ( !( n_GPi -> s [ i ] ) ) * ( ( n_GPi -> refr [ i ] ) - 1 ); // set counter
     }
 }
-// SNc
 __global__ void t_refr_SNc ( neuron_t *n_SNc ){
 
     long i = threadIdx.x + blockIdx.x * blockDim.x;
@@ -79,7 +72,6 @@ __global__ void t_refr_SNc ( neuron_t *n_SNc ){
         n_SNc -> refr [ i ] = ( n_SNc -> s [ i ] ) * ( T_REFR ) + ( !( n_SNc -> s [ i ] ) ) * ( ( n_SNc -> refr [ i ] ) - 1 ); // set counter
     }
 }
-// PTN
 __global__ void t_refr_PTN ( neuron_t *n_PTN ){
 
     long i = threadIdx.x + blockIdx.x * blockDim.x;
@@ -89,7 +81,6 @@ __global__ void t_refr_PTN ( neuron_t *n_PTN ){
         n_PTN -> refr [ i ] = ( n_PTN -> s [ i ] ) * ( T_REFR ) + ( !( n_PTN -> s [ i ] ) ) * ( ( n_PTN -> refr [ i ] ) - 1 ); // set counter
     }
 }
-// PTI
 __global__ void t_refr_PTI ( neuron_t *n_PTI ){
 
     long i = threadIdx.x + blockIdx.x * blockDim.x;
@@ -99,7 +90,6 @@ __global__ void t_refr_PTI ( neuron_t *n_PTI ){
         n_PTI -> refr [ i ] = ( n_PTI -> s [ i ] ) * ( T_REFR ) + ( !( n_PTI -> s [ i ] ) ) * ( ( n_PTI -> refr [ i ] ) - 1 ); // set counter
     }
 }
-// Th
 __global__ void t_refr_Th ( neuron_t *n_Th ){
 
     long i = threadIdx.x + blockIdx.x * blockDim.x;
@@ -109,6 +99,8 @@ __global__ void t_refr_Th ( neuron_t *n_Th ){
         n_Th -> refr [ i ] = ( n_Th -> s [ i ] ) * ( T_REFR ) + ( !( n_Th -> s [ i ] ) ) * ( ( n_Th -> refr [ i ] ) - 1 ); // set counter
     }
 }
+
+// 不応期を再現している関数をグリッド数とブロック数を指定してGPUで実行する関数
 void t_refr ( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI, neuron_t *n_STN, neuron_t *n_GPe, neuron_t *n_GPi, neuron_t *n_SNc, neuron_t *n_PTN, neuron_t *n_PTI, neuron_t *n_Th ){
 
     t_refr_MSN_D1 <<< GRID_SIZE_MSN_D1, BLOCK_SIZE >>> ( n_MSN_D1 );
@@ -133,9 +125,9 @@ void t_refr ( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI, neuron_t 
     cudaDeviceSynchronize ( );
 }
 
+// ニューロンの発火数をカウントする関数
 void Spike_counting ( neuron_t *n_GPi ){
 
-    //GPi
     for ( int i = 0; i < N_GPi; i++ ){
 
         if ( n_GPi -> s[ i ] ){
@@ -145,59 +137,109 @@ void Spike_counting ( neuron_t *n_GPi ){
     }
 }
 
-//ループ
-void loop( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI, neuron_t *n_STN, neuron_t *n_GPe, neuron_t *n_GPi, neuron_t *n_SNc, neuron_t *n_PTN, neuron_t *n_PTI, neuron_t *n_PSN, neuron_t *n_Th, neuron_t *n_CMPf, int W_1, int W_2 ){
-    
+// ループによって時間変化を表現しシミュレーションを実行する関数
+void simulat( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI, neuron_t *n_STN, neuron_t *n_GPe, neuron_t *n_GPi, neuron_t *n_SNc, neuron_t *n_PTN, neuron_t *n_PTI, neuron_t *n_PSN, neuron_t *n_Th, neuron_t *n_CMPf ){
+
+    // シミュレーションの計算時間の計測を開始
     timer_start();
+
+    // シミュレーション内の時間を表す変数
     int nt;
 
-    //FreeRun
+    // 初期化時のランダム性から影響を受けないようにするための100[ms]のフリーラン
     for ( nt = 0; nt < FreeRun; nt++ ){
+        // preニューロン毎のシナプス後電圧を計算
         updateSynapse ( nt, n_MSN_D1, n_MSN_D2, n_FSI, n_STN, n_GPe, n_GPi, n_SNc, n_PTN, n_PTI, n_PSN, n_Th, n_CMPf );
+
+        // それぞれのpostニューロンが受け取るシナプス後電圧の合計を計算
         InputSynapsePotential ( nt, n_MSN_D1, n_MSN_D2, n_FSI, n_STN, n_GPe, n_GPi, n_SNc, n_PTN, n_PTI, n_PSN, n_Th, n_CMPf );
+
+        // それぞれのニューロンの膜電位を計算し発火の有無を判定
         updatePotential( nt, n_MSN_D1, n_MSN_D2, n_FSI, n_STN, n_GPe, n_GPi, n_SNc, n_PTN, n_PTI, n_Th );
+
+        // 入力となるニューロンの発火の有無を判定
         input_neuron ( nt, n_PSN, n_CMPf );
+
+        // 前の関数でわかった発火の有無をもとに不応期を計算
         t_refr ( n_MSN_D1, n_MSN_D2, n_FSI, n_STN, n_GPe, n_GPi, n_SNc, n_PTN, n_PTI, n_Th );
     }
 
-    //ActionSelectionなし
+    // 行動選択を行うという入力が無い時間範囲を再現するためのループ(0[ms]~400[ms]の間)
     for ( ; nt < NT; nt++ ){
 
+        // preニューロン毎のシナプス後電圧を計算
         updateSynapse ( nt, n_MSN_D1, n_MSN_D2, n_FSI, n_STN, n_GPe, n_GPi, n_SNc, n_PTN, n_PTI, n_PSN, n_Th, n_CMPf );
+
+        // それぞれのpostニューロンが受け取るシナプス後電圧の合計を計算
         InputSynapsePotential ( nt, n_MSN_D1, n_MSN_D2, n_FSI, n_STN, n_GPe, n_GPi, n_SNc, n_PTN, n_PTI, n_PSN, n_Th, n_CMPf );
+
+        // それぞれのニューロンの膜電位を計算し発火の有無を判定
         updatePotential( nt, n_MSN_D1, n_MSN_D2, n_FSI, n_STN, n_GPe, n_GPi, n_SNc, n_PTN, n_PTI, n_Th );
+
+        // 入力となるニューロンの発火の有無を判定
         input_neuron ( nt, n_PSN, n_CMPf );
+
+        // 前の関数でわかった発火の有無をもとに不応期を計算
         t_refr ( n_MSN_D1, n_MSN_D2, n_FSI, n_STN, n_GPe, n_GPi, n_SNc, n_PTN, n_PTI, n_Th );
+
+        // 単位時間あたりのニューロンの発火数を計算
         Spike_counting ( n_GPi );
     }
 
-    //ActionSelectionあり
-    for ( ; nt < NT_action; nt++ ){
+    // 行動選択を行うという入力がある時間範囲を再現するためのループ(401[ms]~600[ms]の間)
+    for ( ; nt < NT; nt++ ){
 
+        // preニューロン毎のシナプス後電圧を計算
         updateSynapse ( nt, n_MSN_D1, n_MSN_D2, n_FSI, n_STN, n_GPe, n_GPi, n_SNc, n_PTN, n_PTI, n_PSN, n_Th, n_CMPf );
+
+        // それぞれのpostニューロンが受け取るシナプス後電圧の合計を計算
         InputSynapsePotential ( nt, n_MSN_D1, n_MSN_D2, n_FSI, n_STN, n_GPe, n_GPi, n_SNc, n_PTN, n_PTI, n_PSN, n_Th, n_CMPf );
+
+        // それぞれのニューロンの膜電位を計算し発火の有無を判定
         updatePotential( nt, n_MSN_D1, n_MSN_D2, n_FSI, n_STN, n_GPe, n_GPi, n_SNc, n_PTN, n_PTI, n_Th );
-        change_input_neuron ( nt, n_PSN, n_CMPf, W_1, W_2 );
+
+        // 入力となるニューロンの発火の有無を判定
+        change_input_neuron ( nt, n_PSN, n_CMPf );
+
+        // 前の関数でわかった発火の有無をもとに不応期を計算
         t_refr ( n_MSN_D1, n_MSN_D2, n_FSI, n_STN, n_GPe, n_GPi, n_SNc, n_PTN, n_PTI, n_Th );
+
+        // 単位時間あたりのニューロンの発火数を計算
         Spike_counting ( n_GPi );
     }
 
-    //ActionSelectionなし
-    for ( ; nt < NT2; nt++ ){
+    // 行動選択を行うという入力が無い時間範囲を再現するためのループ(600[ms]~1000[ms]の間)
+    for ( ; nt < NT; nt++ ){
 
+        // preニューロン毎のシナプス後電圧を計算
         updateSynapse ( nt, n_MSN_D1, n_MSN_D2, n_FSI, n_STN, n_GPe, n_GPi, n_SNc, n_PTN, n_PTI, n_PSN, n_Th, n_CMPf );
+
+        // それぞれのpostニューロンが受け取るシナプス後電圧の合計を計算
         InputSynapsePotential ( nt, n_MSN_D1, n_MSN_D2, n_FSI, n_STN, n_GPe, n_GPi, n_SNc, n_PTN, n_PTI, n_PSN, n_Th, n_CMPf );
+
+        // それぞれのニューロンの膜電位を計算し発火の有無を判定
         updatePotential( nt, n_MSN_D1, n_MSN_D2, n_FSI, n_STN, n_GPe, n_GPi, n_SNc, n_PTN, n_PTI, n_Th );
+
+        // 入力となるニューロンの発火の有無を判定
         input_neuron ( nt, n_PSN, n_CMPf );
+
+        // 前の関数でわかった発火の有無をもとに不応期を計算
         t_refr ( n_MSN_D1, n_MSN_D2, n_FSI, n_STN, n_GPe, n_GPi, n_SNc, n_PTN, n_PTI, n_Th );
+
+        // 単位時間あたりのニューロンの発火数を計算
         Spike_counting ( n_GPi );
     }
 
+    // シミュレーションの計算時間
     double elapsedTime = timer_elapsed ();
 
+    // シミュレーションに要した計算時間の出力
     printf ( "Elapsed time = %f sec.\n", elapsedTime );
 
+    // 1000msのシミュレーションでのそれぞれのニューロンの１個あたりの発火率をファイル出力
     outputFiringRate ( n_GPi );
+
+    // 各ニューロンの値を初期化
     initalize_Neuron ( n_MSN_D1, n_MSN_D2, n_FSI, n_STN, n_GPe, n_GPi, n_SNc, n_PTN, n_PTI, n_PSN, n_Th, n_CMPf );
     initalize_selection ( n_PSN );
 }

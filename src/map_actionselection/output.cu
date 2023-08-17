@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+// ニューロンについて発火の総数をニューロン数で割り、平均発火率を計算し標準出力する関数
 void outputFiringRate ( neuron_t *n_GPi ){
 
     float mean = 0;

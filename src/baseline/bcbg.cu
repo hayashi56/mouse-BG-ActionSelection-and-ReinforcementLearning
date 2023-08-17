@@ -47,12 +47,12 @@ int main( void ){
 
   // シミュレーション用いる変数のメモリ確保・初期化
   initalize ( msn_d1, msn_d2, fsi, stn, gpe, gpi, snc, ptn, pti, psn, th, cmpf );
-  
+
   // 各ニューロンについてのシミュレーション結果を出力するファイルをオープン
   file_open( msn_d1, msn_d2, fsi, stn, gpe, gpi, snc, ptn, pti, psn, th, cmpf  );
 
   // 1s(1000ms)のシミュレーションを行う関数
-  loop ( msn_d1, msn_d2, fsi, stn, gpe, gpi, snc, ptn, pti, psn, th, cmpf );
+  simulat ( msn_d1, msn_d2, fsi, stn, gpe, gpi, snc, ptn, pti, psn, th, cmpf );
 
   // メモリ確保した構造体のメンバ変数のメモリの解放
   finalize ( msn_d1, msn_d2, fsi, stn, gpe, gpi, snc, ptn, pti, psn, th, cmpf );

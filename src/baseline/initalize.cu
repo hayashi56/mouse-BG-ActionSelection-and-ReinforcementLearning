@@ -6,6 +6,7 @@
 #include <vector>
 #include "param.h"
 
+// それぞれのニューロンのデータを出力するためのファイルを参照する関数
 void file_open ( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI, neuron_t *n_STN, neuron_t *n_GPe, neuron_t *n_GPi, neuron_t *n_SNc, neuron_t *n_PTN, neuron_t *n_PTI, neuron_t *n_PSN, neuron_t *n_Th, neuron_t *n_CMPf ){
 
     n_MSN_D1 -> file = fopen ( "MSN_D1spike.dat", "w" );
@@ -22,6 +23,7 @@ void file_open ( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI, neuron
     n_CMPf -> file = fopen ( "CMPfspike.dat", "w" );
 }
 
+// 構造体内のそれぞれのニューロンに関する値を格納する配列のメモリ確保をする関数
 void Allocating_Neuron ( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI, neuron_t *n_STN, neuron_t *n_GPe, neuron_t *n_GPi, neuron_t *n_SNc, neuron_t *n_PTN, neuron_t *n_PTI, neuron_t *n_PSN, neuron_t *n_Th, neuron_t *n_CMPf ){
 
     cudaMallocManaged ( &n_MSN_D1 -> v, sizeof ( float ) * N_MSN_D1 );
@@ -41,7 +43,7 @@ void Allocating_Neuron ( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI
     cudaMallocManaged ( &n_MSN_D2 -> s, sizeof ( bool ) * N_MSN_D2 );
     cudaMallocManaged ( &n_MSN_D2 -> counter, sizeof ( int ) * N_MSN_D2 );
     cudaMallocManaged ( &n_MSN_D2 -> num_pre, sizeof ( long ) * N_MSN_D2 * 9 );
-    
+
     cudaMallocManaged ( &n_FSI -> v, sizeof ( float ) * N_FSI );
     cudaMallocManaged ( &n_FSI -> ig, sizeof ( float ) * N_FSI );
     cudaMallocManaged ( &n_FSI -> psp_GABA, sizeof ( float ) * N_FSI );
@@ -50,7 +52,7 @@ void Allocating_Neuron ( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI
     cudaMallocManaged ( &n_FSI -> refr, sizeof ( int ) * N_FSI );
     cudaMallocManaged ( &n_FSI -> counter, sizeof ( int ) * N_FSI );
     cudaMallocManaged ( &n_FSI -> num_pre, sizeof ( long ) * N_FSI * 6 );
-    
+
     cudaMallocManaged ( &n_STN -> v, sizeof ( float ) * N_STN );
     cudaMallocManaged ( &n_STN -> ig, sizeof ( float ) * N_STN );
     cudaMallocManaged ( &n_STN -> psp_AMPA, sizeof ( float ) * N_STN );
@@ -60,7 +62,7 @@ void Allocating_Neuron ( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI
     cudaMallocManaged ( &n_STN -> refr, sizeof ( int ) * N_STN );
     cudaMallocManaged ( &n_STN -> counter, sizeof ( int ) * N_STN );
     cudaMallocManaged ( &n_STN -> num_pre, sizeof ( long ) * N_STN * 3 );
-    
+
     cudaMallocManaged ( &n_GPe -> v, sizeof ( float ) * N_GPe );
     cudaMallocManaged ( &n_GPe -> ig, sizeof ( float ) * N_GPe );
     cudaMallocManaged ( &n_GPe -> psp_GABA, sizeof ( float ) * N_GPe );
@@ -131,6 +133,7 @@ void Allocating_Neuron ( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI
     cudaMallocManaged ( &n_CMPf -> counter, sizeof ( int ) * N_CMPf );
 }
 
+// ニューロンの値の初期化をする関数
 void initalize_Neuron ( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI, neuron_t *n_STN, neuron_t *n_GPe, neuron_t *n_GPi, neuron_t *n_SNc, neuron_t *n_PTN, neuron_t *n_PTI, neuron_t *n_PSN, neuron_t *n_Th, neuron_t *n_CMPf ){
 
     for ( int i = 0; i < N_MSN_D1; i++ ){
@@ -265,22 +268,7 @@ void initalize_Neuron ( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
     }
 }
 
-void initalize_selection( neuron_t *n_PSN ){
-    
-    std::vector<int> v;
-    for ( int i = 0; i != N_PSN; ++i ){
-        v.push_back( i );
-    }
-
-    std::random_device get_rand_dev;
-    std::mt19937 get_rand_mt ( get_rand_dev () );
-    std::shuffle ( v.begin (), v.end (), get_rand_mt );
-
-    for ( int i = 0; i < N_select; i++ ){
-        n_PSN -> select [ v [ i ] ] = true;
-    }
-}
-
+// シナプスについてのメモリ確保・初期化をする関数
 void initalize_synapse( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI, neuron_t *n_STN, neuron_t *n_GPe, neuron_t *n_GPi, neuron_t *n_SNc, neuron_t *n_PTN, neuron_t *n_PTI, neuron_t *n_Th ){
 
     int k = 0;
@@ -1328,9 +1316,6 @@ void initalize( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI, neuron_
 
     // ニューロンを表現する構造体のメンバ変数の初期化
     initalize_Neuron( n_MSN_D1, n_MSN_D2, n_FSI, n_STN, n_GPe, n_GPi, n_SNc, n_PTN, n_PTI, n_PSN, n_Th, n_CMPf );
-
-    // 行動選択で選択肢を提示する際に優位的に発火率を上げるニューロンをランダムで決める関数
-    initalize_selection ( n_PSN );
 
     // シナプス結合に関するメンバ変数のメモリ確保と乱数を用いて結合の再現
     initalize_synapse( n_MSN_D1, n_MSN_D2, n_FSI, n_STN, n_GPe, n_GPi, n_SNc, n_PTN, n_PTI, n_Th );

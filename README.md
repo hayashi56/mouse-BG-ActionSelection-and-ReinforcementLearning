@@ -41,7 +41,7 @@ CMPf:(firingrate)Hz
 ファイル出力でそれぞれ`MSN_D1spike.dat`, `MSN_D2spike.dat`, `FSIspike.dat`, `STNspike.dat`, `GPespike.dat`, `GPispike.dat`, `SNcspike.dat`, `PTNspike.dat`, `PTIspike.dat`, `PSNspike.dat`, `Thspike.dat`, `CMPfspike.dat`に出力されるので、それらを`rasterplot.ipynb`でプロットできる。
 
 実行後、実行結果が`map_actionselection`は、まず標準出力でシミュレーションの計算時間が`Elapsed time = (elapsedTime) sec.`の様な形(`(elapsedTime)は数値`)で出力される。
-`map_actionselection`ではシミュレーションを400回行うので、400回シミュレーションの計算時間が表示される。
+`map_actionselection`ではシミュレーションを400回行うので(詳しくは`概要.pdf`)、400回シミュレーションの計算時間が表示される。
 ファイル出力でそれぞれ`GPifiringrate_chanel1.dat`, `GPifiringrate_chanel2.dat`に出力されるので、それらを`actionselection.ipynb`でプロットできる。
 
 ### ファイルの処理
@@ -65,7 +65,9 @@ rm -f *.dat
 
 ```
 parametar.pdf : マウスの大脳基底核における解剖学的、電気⽣理学的データをもとにして定義したパラメータのまとめ
+概要.pdf : シミュレーションモデルについての概要
 src/ : ソースコード
+
 src/actionselection/bcbg.cu : 行動選択を行うシミュレーションプログラムのメイン文が書かれているファイル
 src/actionselection/param.h : 解剖学的・電気生理学的報告によるパラメータやシミュレーションに関するパラメータ(神経細胞の活動時間等)の定義が書かれているファイル
 src/actionselection/structure.cu : 構造体の定義やメモリの開放やファイルのクローズする関数が書かれているファイル
@@ -75,16 +77,24 @@ src/actionselection/update.cu : 時間変化による膜電位の更新や入力
 src/actionselection/output.cu : 出力に関する関数が書かれているファイル
 src/actionselection/function.cu : シミュレーションを行う関数やその他の関数が書かれているファイル
 src/actionselection/rasterplot.ipynb : シミュレーション結果をグラフにプロットするファイル
-src/actionselection/bcbg.cu : 行動選択を行うシミュレーションプログラムのメイン文が書かれているファイル
 
-src/actionselection/param.h : 解剖学的・電気生理学的報告によるパラメータやシミュレーションに関するパラメータ(神経細胞の活動時間等)の定義が書かれているファイル
-src/actionselection/structure.cu : 構造体の定義やメモリの開放やファイルのクローズする関数が書かれているファイル
-src/actionselection/initalize.cu : 初期化、メモリ確保、ファイルをオープンする関数が書かれているファイル
-src/actionselection/synapse_function.cu : シナプス結合の更新に関する関数が書かれているファイル
-src/actionselection/update.cu : 時間変化による膜電位の更新や入力の神経細胞の活動に関する関数が書かれているファイル
-src/actionselection/output.cu : 出力に関する関数が書かれているファイル
-src/actionselection/function.cu : シミュレーションを行う関数やその他の関数が書かれているファイル
-src/actionselection/rasterplot.ipynb : シミュレーション結果をグラフにプロットするファイル
-src/actionselection/bcbg.cu : 行動選択を行うシミュレーションプログラムのメイン文が書かれているファイル
+src/baseline/bcbg.cu : 安静時脳活動を行うシミュレーションプログラムのメイン文が書かれているファイル
+src/baseline/param.h : 解剖学的・電気生理学的報告によるパラメータやシミュレーションに関するパラメータ(神経細胞の活動時間等)の定義が書かれているファイル
+src/baseline/structure.cu : 構造体の定義やメモリの開放やファイルのクローズする関数が書かれているファイル
+src/baseline/initalize.cu : 初期化、メモリ確保、ファイルをオープンする関数が書かれているファイル
+src/baseline/synapse_function.cu : シナプス結合の更新に関する関数が書かれているファイル
+src/baseline/update.cu : 時間変化による膜電位の更新や入力の神経細胞の活動に関する関数が書かれているファイル
+src/baseline/output.cu : 出力に関する関数が書かれているファイル
+src/baseline/function.cu : シミュレーションを行う関数やその他の関数が書かれているファイル
+src/baseline/rasterplot.ipynb : シミュレーション結果をグラフにプロットするファイル
 
+src/map_actionselection/bcbg.cu : 様々な入力のときの行動選択を行うシミュレーションプログラムのメイン文が書かれているファイル
+src/map_actionselection/param.h : 解剖学的・電気生理学的報告によるパラメータやシミュレーションに関するパラメータ(神経細胞の活動時間等)の定義が書かれているファイル
+src/map_actionselection/structure.cu : 構造体の定義やメモリの開放やファイルのクローズする関数が書かれているファイル
+src/map_actionselection/initalize.cu : 初期化、メモリ確保、ファイルをオープンする関数が書かれているファイル
+src/map_actionselection/synapse_function.cu : シナプス結合の更新に関する関数が書かれているファイル
+src/map_actionselection/update.cu : 時間変化による膜電位の更新や入力の神経細胞の活動に関する関数が書かれているファイル
+src/map_actionselection/output.cu : 出力に関する関数が書かれているファイル
+src/map_actionselection/function.cu : シミュレーションを行う関数やその他の関数が書かれているファイル
+src/map_actionselection/actionselection.ipynb : シミュレーション結果をヒートマップでプロットするファイル
 ```

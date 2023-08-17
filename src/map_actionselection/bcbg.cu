@@ -47,14 +47,16 @@ int main( void ){
 
   // シミュレーション用いる変数のメモリ確保・初期化
   initalize ( msn_d1, msn_d2, fsi, stn, gpe, gpi, snc, ptn, pti, psn, th, cmpf );
-  
+
   // 各ニューロンについてのシミュレーション結果を出力するファイルをオープン
   file_open( msn_d1, msn_d2, fsi, stn, gpe, gpi, snc, ptn, pti, psn, th, cmpf  );
 
-  // 1s(1000ms)のシミュレーションを行う関数
-  for ( int i = 0; i < N_i; i++ ){
-    for ( int j = 0; j < N_i; j++ ){
-      loop ( msn_d1, msn_d2, fsi, stn, gpe, gpi, snc, ptn, pti, psn, th, cmpf, i , j );
+  // chanel1(選択肢1)の選択性の変化
+  for ( int chanel1 = 0; chanel1 < N_change; chanel1++ ){
+    // chanel2(選択肢2)の選択性の変化
+    for ( int chanel2 = 0; chanel2 < N_change; chanel2++ ){
+      // 1s(1000ms)のシミュレーションを行う関数
+      loop ( msn_d1, msn_d2, fsi, stn, gpe, gpi, snc, ptn, pti, psn, th, cmpf, chanel1 , chanel2 );
     }
   }
 

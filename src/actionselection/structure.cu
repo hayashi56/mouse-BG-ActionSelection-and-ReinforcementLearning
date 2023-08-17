@@ -3,7 +3,21 @@
 #include <SFMT.h>
 #include "param.h"
 
-//ニューロン
+// ニューロンに関する値を定義している構造体
+/*
+vはニューロンの膜電位
+igはニューロンが受け取るシナプス後電位
+alpha_〇〇はニューロンからの神経伝達物質によって生じるシナプス後電位(GABAは抑制性、AMPA, NMDAは興奮性、DOPAは受容体によってドーパミンが興奮性、抑制性に変化)
+sはニューロンの発火の有無
+selectは行動選択を行う際に発火率を変化させるニューロンであるかどうか
+refrは不応期の残りカウント(2msの不応期であれば2)
+tsは発火した時間
+counterは発火したニューロンの数のカウント
+postはそのニューロンがどのニューロンとの間に結合を持ているかを相手のニューロン番号を入れることで記録
+num_preはそのニューロンがそれぞれの種類のニューロンに対していくつの結合を持っているか
+rngはニューロンの初期化や入力のニューロンの発火の有無を求めるときに扱う乱数のシード値(乱数生成方法はメルセンヌ・ツイスタ)
+fileはシミュレーション内の時間においてそのニューロンの発火を記述する出力ファイル(具体的には発火した時間と発火したニューロンの番号の出力)
+*/
 typedef struct{
 
     float *v, *ig, *psp_AMPA, *psp_GABA, *psp_NMDA, *psp_DOPA;
@@ -11,9 +25,10 @@ typedef struct{
     int *refr, *ts, *counter, *post;
     long *num_pre;
     sfmt_t rng;
-    FILE *file, *file1, *file2;
+    FILE *file;
 } neuron_t;
 
+// それぞれニューロンのデータを出力したファイルを閉じる関数
 void fileclose( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI, neuron_t *n_STN, neuron_t *n_GPe, neuron_t *n_GPi, neuron_t *n_SNc, neuron_t *n_PTN, neuron_t *n_PTI, neuron_t *n_PSN, neuron_t *n_Th, neuron_t *n_CMPf ){
 
     fclose ( n_MSN_D1 -> file );
@@ -28,34 +43,9 @@ void fileclose( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI, neuron_
     fclose ( n_PSN -> file );
     fclose ( n_Th -> file );
     fclose ( n_CMPf -> file );
-
-    // fclose ( n_MSN_D1 -> file1 );
-    // fclose ( n_MSN_D2 -> file1 );
-    // fclose ( n_FSI -> file1 );
-    // fclose ( n_STN -> file1 );
-    // fclose ( n_GPe -> file1 );
-    // fclose ( n_GPi -> file1 );
-    // fclose ( n_SNc -> file1 );
-    // fclose ( n_PTI -> file1 );
-    // fclose ( n_PTN -> file1 );
-    fclose ( n_PSN -> file1 );
-    fclose ( n_Th -> file1 );
-    fclose ( n_CMPf -> file1 );
-    
-    //fclose ( n_MSN_D1 -> file2 );
-    //fclose ( n_MSN_D2 -> file2 );
-    //fclose ( n_FSI -> file2 );
-    //fclose ( n_STN -> file2 );
-    //fclose ( n_GPe -> file2 );
-    //fclose ( n_GPi -> file2 );
-    //fclose ( n_SNc -> file2 );
-    //fclose ( n_PTI -> file2 );
-    //fclose ( n_PTN -> file2 );
-    fclose ( n_PSN -> file2 );
-    fclose ( n_Th -> file2 );
-    fclose ( n_CMPf -> file2 );
 }
 
+// それぞれの構造体内のニューロンに関す情報を持ったポインタ変数のメモリの開放
 void finalize ( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI, neuron_t *n_STN, neuron_t *n_GPe, neuron_t *n_GPi, neuron_t *n_SNc, neuron_t *n_PTN, neuron_t *n_PTI, neuron_t *n_PSN, neuron_t *n_Th, neuron_t *n_CMPf ){
 
     // MSN_D1

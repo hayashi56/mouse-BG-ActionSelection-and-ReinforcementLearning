@@ -6,6 +6,7 @@
 #include <vector>
 #include "param.h"
 
+// それぞれのニューロンのデータを出力するためのファイルを参照する関数
 void file_open ( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI, neuron_t *n_STN, neuron_t *n_GPe, neuron_t *n_GPi, neuron_t *n_SNc, neuron_t *n_PTN, neuron_t *n_PTI, neuron_t *n_PSN, neuron_t *n_Th, neuron_t *n_CMPf ){
 
     n_MSN_D1 -> file = fopen ( "MSN_D1spike.dat", "w" );
@@ -22,6 +23,7 @@ void file_open ( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI, neuron
     n_CMPf -> file = fopen ( "CMPfspike.dat", "w" );
 }
 
+// 構造体内のそれぞれのニューロンに関する値を格納する配列のメモリ確保をする関数
 void Allocating_Neuron ( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI, neuron_t *n_STN, neuron_t *n_GPe, neuron_t *n_GPi, neuron_t *n_SNc, neuron_t *n_PTN, neuron_t *n_PTI, neuron_t *n_PSN, neuron_t *n_Th, neuron_t *n_CMPf ){
 
     cudaMallocManaged ( &n_MSN_D1 -> v, sizeof ( float ) * N_MSN_D1 );
@@ -41,7 +43,7 @@ void Allocating_Neuron ( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI
     cudaMallocManaged ( &n_MSN_D2 -> s, sizeof ( bool ) * N_MSN_D2 );
     cudaMallocManaged ( &n_MSN_D2 -> counter, sizeof ( int ) * N_MSN_D2 );
     cudaMallocManaged ( &n_MSN_D2 -> num_pre, sizeof ( long ) * N_MSN_D2 * 9 );
-    
+
     cudaMallocManaged ( &n_FSI -> v, sizeof ( float ) * N_FSI );
     cudaMallocManaged ( &n_FSI -> ig, sizeof ( float ) * N_FSI );
     cudaMallocManaged ( &n_FSI -> psp_GABA, sizeof ( float ) * N_FSI );
@@ -50,7 +52,7 @@ void Allocating_Neuron ( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI
     cudaMallocManaged ( &n_FSI -> refr, sizeof ( int ) * N_FSI );
     cudaMallocManaged ( &n_FSI -> counter, sizeof ( int ) * N_FSI );
     cudaMallocManaged ( &n_FSI -> num_pre, sizeof ( long ) * N_FSI * 6 );
-    
+
     cudaMallocManaged ( &n_STN -> v, sizeof ( float ) * N_STN );
     cudaMallocManaged ( &n_STN -> ig, sizeof ( float ) * N_STN );
     cudaMallocManaged ( &n_STN -> psp_AMPA, sizeof ( float ) * N_STN );
@@ -60,7 +62,7 @@ void Allocating_Neuron ( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI
     cudaMallocManaged ( &n_STN -> refr, sizeof ( int ) * N_STN );
     cudaMallocManaged ( &n_STN -> counter, sizeof ( int ) * N_STN );
     cudaMallocManaged ( &n_STN -> num_pre, sizeof ( long ) * N_STN * 3 );
-    
+
     cudaMallocManaged ( &n_GPe -> v, sizeof ( float ) * N_GPe );
     cudaMallocManaged ( &n_GPe -> ig, sizeof ( float ) * N_GPe );
     cudaMallocManaged ( &n_GPe -> psp_GABA, sizeof ( float ) * N_GPe );
@@ -131,6 +133,7 @@ void Allocating_Neuron ( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI
     cudaMallocManaged ( &n_CMPf -> counter, sizeof ( int ) * N_CMPf );
 }
 
+// 各ニューロンの値の初期化をする関数
 void initalize_Neuron ( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI, neuron_t *n_STN, neuron_t *n_GPe, neuron_t *n_GPi, neuron_t *n_SNc, neuron_t *n_PTN, neuron_t *n_PTI, neuron_t *n_PSN, neuron_t *n_Th, neuron_t *n_CMPf ){
 
     for ( int i = 0; i < N_MSN_D1; i++ ){
@@ -265,8 +268,9 @@ void initalize_Neuron ( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
     }
 }
 
+// 発火率を変化させるニューロンを決める関数
 void initalize_selection( neuron_t *n_PSN ){
-    
+
     std::vector<int> v;
     for ( int i = 0; i != N_PSN; ++i ){
         v.push_back( i );
@@ -281,17 +285,16 @@ void initalize_selection( neuron_t *n_PSN ){
     }
 }
 
+// シナプスについてのメモリ確保・初期化をする関数
 void initalize_synapse( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI, neuron_t *n_STN, neuron_t *n_GPe, neuron_t *n_GPi, neuron_t *n_SNc, neuron_t *n_PTN, neuron_t *n_PTI, neuron_t *n_Th ){
 
     int k = 0;
-    long num_of_synapse = 0;
     long post_synapse = 0;
     long count = 0;
     long count_pre = 0;
 
     srand ( 1 );
     // CMPf→MSN_D1(拡散型)
-    num_of_synapse += N_CMPf * N_MSN_D1;
     post_synapse += N_CMPf * N_MSN_D1;
 
     // MSN_D1→MSN_D1(拡散型)
@@ -300,7 +303,6 @@ void initalize_synapse( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
             count += ( long ) ( ( ( double ) rand () / RAND_MAX ) < P_MSND1MSND1 );
         }
     }
-    num_of_synapse += count;
     post_synapse += count;
     count = 0;
 
@@ -310,7 +312,6 @@ void initalize_synapse( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
             count += ( long ) ( ( ( double ) rand () / RAND_MAX ) < P_MSND2MSND1 );
         }
     }
-    num_of_synapse += count;
     post_synapse += count;
     count = 0;
 
@@ -320,7 +321,6 @@ void initalize_synapse( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
             count += ( long ) ( ( ( double ) rand () / RAND_MAX ) < P_FSIMSND1 );
         }
     }
-    num_of_synapse += count;
     post_synapse += count;
     count = 0;
 
@@ -330,7 +330,6 @@ void initalize_synapse( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
             count += ( long ) ( ( ( double ) rand () / RAND_MAX ) < P_STNMSND1 );
         }
     }
-    num_of_synapse += count;
     post_synapse += count;
     count = 0;
 
@@ -340,7 +339,6 @@ void initalize_synapse( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
             count += ( long ) ( ( ( double ) rand ( ) / RAND_MAX ) < P_GPeMSND1 );
         }
     }
-    num_of_synapse += count;
     post_synapse += count;
     count = 0;
 
@@ -350,23 +348,19 @@ void initalize_synapse( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
             count += ( long ) ( ( ( double ) rand ( ) / RAND_MAX ) < P_SNcMSND1 );
         }
     }
-    num_of_synapse += count;
     post_synapse += count;
     count = 0;
 
     // PTN→MSN_D1(集中型)
-    num_of_synapse += per_chanel_N_PTN * per_chanel_N_MSN_D1 * N_chanel;
     post_synapse += per_chanel_N_PTN * per_chanel_N_MSN_D1 * N_chanel;
 
     // PSN→MSN_D1(集中型)
-    num_of_synapse += per_chanel_N_PSN * per_chanel_N_MSN_D1 * N_chanel;
     post_synapse += per_chanel_N_PSN * per_chanel_N_MSN_D1 * N_chanel;
 
     cudaMallocManaged ( &n_MSN_D1 -> post, sizeof ( long ) * post_synapse );
     post_synapse = 0;
 
     // CMPf→MSN_D2(拡散型)
-    num_of_synapse += N_CMPf * N_MSN_D2;
     post_synapse += N_CMPf * N_MSN_D2;
 
     // MSN_D1→MSN_D2(拡散型)
@@ -375,7 +369,6 @@ void initalize_synapse( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
             count += ( long ) ( ( ( double ) rand () / RAND_MAX ) < P_MSND1MSND2 );
         }
     }
-    num_of_synapse += count;
     post_synapse += count;
     count = 0;
 
@@ -385,7 +378,6 @@ void initalize_synapse( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
             count += ( long ) ( ( ( double ) rand () / RAND_MAX ) < P_MSND2MSND2 );
         }
     }
-    num_of_synapse += count;
     post_synapse += count;
     count = 0;
 
@@ -395,7 +387,6 @@ void initalize_synapse( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
             count += ( long ) ( ( ( double ) rand () / RAND_MAX ) < P_FSIMSND2 );
         }
     }
-    num_of_synapse += count;
     post_synapse += count;
     count = 0;
 
@@ -405,7 +396,6 @@ void initalize_synapse( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
             count += ( long ) ( ( ( double ) rand () / RAND_MAX ) < P_STNMSND2 );
         }
     }
-    num_of_synapse += count;
     post_synapse += count;
     count = 0;
 
@@ -415,7 +405,6 @@ void initalize_synapse( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
             count += ( long ) ( ( ( double ) rand ( ) / RAND_MAX ) < P_GPeMSND2 );
         }
     }
-    num_of_synapse += count;
     post_synapse += count;
     count = 0;
 
@@ -425,70 +414,60 @@ void initalize_synapse( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
             count += ( long ) ( ( ( double ) rand ( ) / RAND_MAX ) < P_SNcMSND2 );
         }
     }
-    num_of_synapse += count;
     post_synapse += count;
     count = 0;
 
     // PTN→MSN_D2(集中型)
-    num_of_synapse += per_chanel_N_PTN * per_chanel_N_MSN_D2 * N_chanel;
     post_synapse += per_chanel_N_PTN * per_chanel_N_MSN_D2 * N_chanel;
 
     // PSN→MSN_D2(集中型)
-    num_of_synapse += per_chanel_N_PSN * per_chanel_N_MSN_D2 * N_chanel;
     post_synapse += per_chanel_N_PSN * per_chanel_N_MSN_D2 * N_chanel;
 
     cudaMallocManaged ( &n_MSN_D2 -> post, sizeof ( long ) * post_synapse );
     post_synapse = 0;
 
     // CMPf→FSI(拡散型)
-    num_of_synapse += N_CMPf * N_FSI;
     post_synapse += N_CMPf * N_FSI;
-    
+
     // FSI→FSI(拡散型)
     for ( long i = 0; i < N_FSI; i++ ){
         for ( long j = 0; j < N_FSI; j++ ){
             count += ( long ) ( ( ( double ) rand () / RAND_MAX ) < P_FSIFSI );
         }
     }
-    num_of_synapse += count;
     post_synapse += count;
     count = 0;
 
-    // STN→FSI(拡散型)   
+    // STN→FSI(拡散型)
     for ( long i = 0; i < N_FSI; i++ ){
         for ( long j = 0; j < N_STN; j++ ){
             count += ( long ) ( ( ( double ) rand () / RAND_MAX ) < P_STNFSI );
         }
     }
-    num_of_synapse += count;
     post_synapse += count;
     count = 0;
 
-    // GPe→FSI(拡散型)    
+    // GPe→FSI(拡散型)
     for ( long i = 0; i < N_FSI; i++ ){
         for ( long j = 0; j < N_GPe; j++ ){
             count += ( long ) ( ( ( double ) rand () / RAND_MAX ) < P_GPeFSI );
         }
     }
-    num_of_synapse += count;
     post_synapse += count;
     count = 0;
 
     // PTN→FSI(集中型)
-    num_of_synapse += per_chanel_N_PTN * per_chanel_N_FSI * N_chanel;
     post_synapse += per_chanel_N_PTN * per_chanel_N_FSI * N_chanel;
 
     // PSN→FSI(集中型)
-    num_of_synapse += per_chanel_N_PSN * per_chanel_N_FSI * N_chanel;
     post_synapse += per_chanel_N_PSN * per_chanel_N_FSI * N_chanel;
 
     cudaMallocManaged ( &n_FSI -> post, sizeof ( long ) * post_synapse );
     post_synapse = 0;
 
     // CMPf→STN(拡散型)
-    num_of_synapse += N_CMPf * N_STN;
     post_synapse += N_CMPf * N_STN;
-    
+
     // GPe→STN(集中型)
     for ( int t = 0; t < N_chanel; t++ ){
         for ( long i = 0; i < per_chanel_N_STN; i++ ){
@@ -497,21 +476,18 @@ void initalize_synapse( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
             }
         }
     }
-    num_of_synapse += count;
     post_synapse += count;
     count = 0;
 
     // PTN→STN(集中型)
-    num_of_synapse += per_chanel_N_PTN * per_chanel_N_STN * N_chanel;
     post_synapse += per_chanel_N_PTN * per_chanel_N_STN * N_chanel;
 
     cudaMallocManaged ( &n_STN -> post, sizeof ( long ) * post_synapse );
     post_synapse = 0;
 
     // CMPf→GPe(拡散型)
-    num_of_synapse += N_CMPf * N_GPe;
     post_synapse += N_CMPf * N_GPe;
-    
+
     // MSN_D1→GPe(集中型)
     for ( int t = 0; t < N_chanel; t++ ){
         for ( long i = 0; i < per_chanel_N_GPe; i++ ){
@@ -520,7 +496,6 @@ void initalize_synapse( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
             }
         }
     }
-    num_of_synapse += count;
     post_synapse += count;
     count = 0;
 
@@ -532,7 +507,6 @@ void initalize_synapse( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
             }
         }
     }
-    num_of_synapse += count;
     post_synapse += count;
     count = 0;
 
@@ -542,17 +516,15 @@ void initalize_synapse( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
             count += ( long ) ( ( ( double ) rand () / RAND_MAX ) < P_STNGPe );
         }
     }
-    num_of_synapse += count;
     post_synapse += count;
     count = 0;
 
-    // GPe→GPe(拡散型)  
+    // GPe→GPe(拡散型)
     for ( long i = 0; i < N_GPe; i++ ){
         for ( long j = 0; j < N_GPe; j++ ){
             count += ( long ) ( ( ( double ) rand () / RAND_MAX ) < P_GPeGPe );
         }
     }
-    num_of_synapse += count;
     post_synapse += count;
     count = 0;
 
@@ -560,7 +532,6 @@ void initalize_synapse( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
     post_synapse = 0;
 
     // CMPf→GPi(拡散型)
-    num_of_synapse += N_CMPf * N_GPi;
     post_synapse += N_CMPf * N_GPi;
 
     // MSN_D1→GPi(集中型)
@@ -571,7 +542,6 @@ void initalize_synapse( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
             }
         }
     }
-    num_of_synapse += count;
     post_synapse += count;
     count = 0;
 
@@ -583,7 +553,6 @@ void initalize_synapse( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
             }
         }
     }
-    num_of_synapse += count;
     post_synapse += count;
     count = 0;
 
@@ -593,7 +562,6 @@ void initalize_synapse( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
             count += ( long ) ( ( ( double ) rand () / RAND_MAX ) < P_STNGPi );
         }
     }
-    num_of_synapse += count;
     post_synapse += count;
     count = 0;
 
@@ -603,7 +571,6 @@ void initalize_synapse( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
             count += ( long ) ( ( ( double ) rand () / RAND_MAX ) < P_GPeGPi );
         }
     }
-    num_of_synapse += count;
     post_synapse += count;
     count = 0;
 
@@ -616,7 +583,6 @@ void initalize_synapse( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
             count += ( long ) ( ( ( double ) rand () / RAND_MAX ) < P_MSND1SNc );
         }
     }
-    num_of_synapse += count;
     post_synapse += count;
     count = 0;
 
@@ -626,41 +592,34 @@ void initalize_synapse( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
             count += ( long ) ( ( ( double ) rand () / RAND_MAX ) < P_MSND2SNc );
         }
     }
-    num_of_synapse += count;
     post_synapse += count;
     count = 0;
 
     cudaMallocManaged ( &n_SNc -> post, sizeof ( long ) * post_synapse );
     post_synapse = 0;
-    
+
     // PTI→PTN(拡散型)
-    num_of_synapse += N_PTI * N_PTN;
     post_synapse += N_PTI * N_PTN;
 
     // PSN→PTN(集中型)
-    num_of_synapse += per_chanel_N_PSN * per_chanel_N_PTN * N_chanel;
     post_synapse += per_chanel_N_PSN * per_chanel_N_PTN * N_chanel;
 
     // Th→PTN(集中型?)
-    num_of_synapse += per_chanel_N_Th * per_chanel_N_PTN * N_chanel;
     post_synapse += per_chanel_N_Th * per_chanel_N_PTN * N_chanel;
 
     cudaMallocManaged ( &n_PTN -> post, sizeof ( long ) * post_synapse );
     post_synapse = 0;
 
     // PTN→PTI(集中型)
-    num_of_synapse += per_chanel_N_PTN * per_chanel_N_PTI * N_chanel;
     post_synapse += per_chanel_N_PTN * per_chanel_N_PTI * N_chanel;
 
     cudaMallocManaged ( &n_PTI -> post, sizeof ( long ) * post_synapse );
     post_synapse = 0;
 
     // GPi→Th(集中型)
-    num_of_synapse += per_chanel_N_GPi * per_chanel_N_Th * N_chanel;
     post_synapse += per_chanel_N_GPi * per_chanel_N_Th * N_chanel;
 
     // PTN→Th(拡散型)
-    num_of_synapse += per_chanel_N_PTN * per_chanel_N_Th * N_chanel;
     post_synapse += per_chanel_N_PTN * per_chanel_N_Th * N_chanel;
 
     cudaMallocManaged ( &n_Th -> post, sizeof ( long ) * post_synapse );
@@ -668,8 +627,8 @@ void initalize_synapse( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
 
     srand ( 1 );
 
-    // CMPf→MSN_D1(拡散型)    
-    for ( long i = 0; i < N_MSN_D1; i++ ){        
+    // CMPf→MSN_D1(拡散型)
+    for ( long i = 0; i < N_MSN_D1; i++ ){
         for ( long j = 0; j < N_CMPf; j++ ){
             n_MSN_D1 -> post[ count + post_synapse ] = j + SynapseCMPf;
             count++;
@@ -682,7 +641,7 @@ void initalize_synapse( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
     k++;
 
     // MSN_D1→MSN_D1(拡散型)
-    for ( long i = 0; i < N_MSN_D1; i++ ){        
+    for ( long i = 0; i < N_MSN_D1; i++ ){
         for ( long j = 0; j < N_MSN_D1; j++ ){
             if ( ( ( double ) rand () / RAND_MAX ) < P_MSND1MSND1 ){
                 n_MSN_D1 -> post[ count + post_synapse ] = j + SynapseMSN_D1;
@@ -697,7 +656,7 @@ void initalize_synapse( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
     k++;
 
     // MSN_D2→MSN_D1(拡散型)
-    for ( long i = 0; i < N_MSN_D1; i++ ){        
+    for ( long i = 0; i < N_MSN_D1; i++ ){
         for ( long j = 0; j < N_MSN_D2; j++ ){
             if ( ( ( double ) rand () / RAND_MAX ) < P_MSND2MSND1 ){
                 n_MSN_D1 -> post[ count + post_synapse ] = j + SynapseMSN_D2;
@@ -712,7 +671,7 @@ void initalize_synapse( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
     k++;
 
     // FSI→MSN_D1(拡散型)
-    for ( long i = 0; i < N_MSN_D1; i++ ){        
+    for ( long i = 0; i < N_MSN_D1; i++ ){
         for ( long j = 0; j < N_FSI; j++ ){
             if ( ( ( double ) rand () / RAND_MAX ) < P_FSIMSND1 ){
                 n_MSN_D1 -> post[ count + post_synapse ] = j + SynapseFSI;
@@ -727,7 +686,7 @@ void initalize_synapse( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
     k++;
 
     // STN→MSN_D1(拡散型)
-    for ( long i = 0; i < N_MSN_D1; i++ ){    
+    for ( long i = 0; i < N_MSN_D1; i++ ){
         for ( long j = 0; j < N_STN; j++ ){
             if ( ( ( double ) rand () / RAND_MAX ) < P_STNMSND1 ){
                 n_MSN_D1 -> post[ count + post_synapse ] = j + SynapseSTN;
@@ -742,7 +701,7 @@ void initalize_synapse( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
     k++;
 
     // GPe→MSN_D1(拡散型)
-    for ( long i = 0; i < N_MSN_D1; i++ ){    
+    for ( long i = 0; i < N_MSN_D1; i++ ){
         for ( long j = 0; j < N_GPe; j++ ){
             if ( ( ( double ) rand () / RAND_MAX ) < P_GPeMSND1 ){
                 n_MSN_D1 -> post[ count + post_synapse ] = j + SynapseGPe;
@@ -750,14 +709,14 @@ void initalize_synapse( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
                 count_pre++;
             }
         }
-        n_MSN_D1 -> num_pre[ i + ( N_MSN_D1 * k ) ] = count_pre;  
+        n_MSN_D1 -> num_pre[ i + ( N_MSN_D1 * k ) ] = count_pre;
     }
     post_synapse += count;
     count = 0;
     k++;
 
     // SNc→MSN_D1(拡散型?)
-    for ( long i = 0; i < N_MSN_D1; i++ ){    
+    for ( long i = 0; i < N_MSN_D1; i++ ){
         for ( long j = 0; j < N_SNc; j++ ){
             if ( ( ( double ) rand () / RAND_MAX ) < P_SNcMSND1 ){
                 n_MSN_D1 -> post[ count + post_synapse ] = j + SynapseSNc;
@@ -765,7 +724,7 @@ void initalize_synapse( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
                 count_pre++;
             }
         }
-        n_MSN_D1 -> num_pre[ i + ( N_MSN_D1 * k ) ] = count_pre;  
+        n_MSN_D1 -> num_pre[ i + ( N_MSN_D1 * k ) ] = count_pre;
     }
     post_synapse += count;
     count = 0;
@@ -802,8 +761,8 @@ void initalize_synapse( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
     count_pre = 0;
     k = 0;
 
-    // CMPf→MSN_D2(拡散型)    
-    for ( long i = 0; i < N_MSN_D2; i++ ){        
+    // CMPf→MSN_D2(拡散型)
+    for ( long i = 0; i < N_MSN_D2; i++ ){
         for ( long j = 0; j < N_CMPf; j++ ){
             n_MSN_D2 -> post[ count + post_synapse ] = j + SynapseCMPf;
             count++;
@@ -816,7 +775,7 @@ void initalize_synapse( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
     k++;
 
     // MSN_D1→MSN_D2(拡散型)
-    for ( long i = 0; i < N_MSN_D2; i++ ){        
+    for ( long i = 0; i < N_MSN_D2; i++ ){
         for ( long j = 0; j < N_MSN_D1; j++ ){
             if ( ( ( double ) rand () / RAND_MAX ) < P_MSND1MSND2 ){
                 n_MSN_D2 -> post[ count + post_synapse ] = j + SynapseMSN_D1;
@@ -831,7 +790,7 @@ void initalize_synapse( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
     k++;
 
     // MSN_D2→MSN_D2(拡散型)
-    for ( long i = 0; i < N_MSN_D2; i++ ){        
+    for ( long i = 0; i < N_MSN_D2; i++ ){
         for ( long j = 0; j < N_MSN_D2; j++ ){
             if ( ( ( double ) rand () / RAND_MAX ) < P_MSND2MSND2 ){
                 n_MSN_D2 -> post[ count + post_synapse ] = j + SynapseMSN_D2;
@@ -846,7 +805,7 @@ void initalize_synapse( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
     k++;
 
     // FSI→MSN_D2(拡散型)
-    for ( long i = 0; i < N_MSN_D2; i++ ){        
+    for ( long i = 0; i < N_MSN_D2; i++ ){
         for ( long j = 0; j < N_FSI; j++ ){
             if ( ( ( double ) rand () / RAND_MAX ) < P_FSIMSND2 ){
                 n_MSN_D2 -> post[ count + post_synapse ] = j + SynapseFSI;
@@ -861,7 +820,7 @@ void initalize_synapse( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
     k++;
 
     // STN→MSN_D2(拡散型)
-    for ( long i = 0; i < N_MSN_D2; i++ ){    
+    for ( long i = 0; i < N_MSN_D2; i++ ){
         for ( long j = 0; j < N_STN; j++ ){
             if ( ( ( double ) rand () / RAND_MAX ) < P_STNMSND2 ){
                 n_MSN_D2 -> post[ count + post_synapse ] = j + SynapseSTN;
@@ -876,7 +835,7 @@ void initalize_synapse( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
     k++;
 
     // GPe→MSN_D2(拡散型)
-    for ( long i = 0; i < N_MSN_D2; i++ ){    
+    for ( long i = 0; i < N_MSN_D2; i++ ){
         for ( long j = 0; j < N_GPe; j++ ){
             if ( ( ( double ) rand () / RAND_MAX ) < P_GPeMSND2 ){
                 n_MSN_D2 -> post[ count + post_synapse ] = j + SynapseGPe;
@@ -884,14 +843,14 @@ void initalize_synapse( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
                 count_pre++;
             }
         }
-        n_MSN_D2 -> num_pre[ i + ( N_MSN_D2 * k ) ] = count_pre;  
+        n_MSN_D2 -> num_pre[ i + ( N_MSN_D2 * k ) ] = count_pre;
     }
     post_synapse += count;
     count = 0;
     k++;
 
     // SNc→MSN_D2(拡散型?)
-    for ( long i = 0; i < N_MSN_D2; i++ ){    
+    for ( long i = 0; i < N_MSN_D2; i++ ){
         for ( long j = 0; j < N_SNc; j++ ){
             if ( ( ( double ) rand () / RAND_MAX ) < P_SNcMSND2 ){
                 n_MSN_D2 -> post[ count + post_synapse ] = j + SynapseSNc;
@@ -899,7 +858,7 @@ void initalize_synapse( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
                 count_pre++;
             }
         }
-        n_MSN_D2 -> num_pre[ i + ( N_MSN_D2 * k ) ] = count_pre;  
+        n_MSN_D2 -> num_pre[ i + ( N_MSN_D2 * k ) ] = count_pre;
     }
     post_synapse += count;
     count = 0;
@@ -919,7 +878,7 @@ void initalize_synapse( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
     post_synapse += count;
     count = 0;
     k++;
-    
+
     // PSN→MSN_D2(集中型)
     for ( int t = 0; t < N_chanel; t++ ){
         for ( long i = 0; i < per_chanel_N_MSN_D2; i++ ){
@@ -950,7 +909,7 @@ void initalize_synapse( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
     k++;
 
     // FSI→FSI(拡散型)
-    for ( long i = 0; i < N_FSI; i++ ){        
+    for ( long i = 0; i < N_FSI; i++ ){
         for ( long j = 0; j < N_FSI; j++ ){
             if ( ( ( double ) rand () / RAND_MAX ) < P_FSIFSI ){
                 n_FSI -> post[ count + post_synapse ] = j + SynapseFSI;
@@ -965,7 +924,7 @@ void initalize_synapse( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
     k++;
 
     // STN→FSI(拡散型)
-    for ( long i = 0; i < N_FSI; i++ ){            
+    for ( long i = 0; i < N_FSI; i++ ){
         for ( long j = 0; j < N_STN; j++ ){
             if ( ( ( double ) rand () / RAND_MAX ) < P_STNFSI ){
                 n_FSI -> post[ count + post_synapse ] = j + SynapseSTN;
@@ -1008,7 +967,7 @@ void initalize_synapse( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
     post_synapse += count;
     count = 0;
     k++;
-    
+
     // PSN→FSI(集中型)
     for ( int t = 0; t < N_chanel; t++ ){
         for ( long i = 0; i < per_chanel_N_FSI; i++ ){
@@ -1119,7 +1078,7 @@ void initalize_synapse( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
     k++;
 
     // STN→GPe(拡散型)
-    for ( long i = 0; i < N_GPe; i++ ){   
+    for ( long i = 0; i < N_GPe; i++ ){
         for ( long j = 0; j < N_STN; j++ ){
             if ( ( ( double ) rand () / RAND_MAX ) < P_STNGPe ){
                 n_GPe -> post[ count + post_synapse ] = j + SynapseSTN;
@@ -1134,7 +1093,7 @@ void initalize_synapse( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
     k++;
 
     // GPe→GPe(拡散型)
-    for ( long i = 0; i < N_GPe; i++ ){     
+    for ( long i = 0; i < N_GPe; i++ ){
         for ( long j = 0; j < N_GPe; j++ ){
             if ( ( ( double ) rand () / RAND_MAX ) < P_GPeGPe ){
                 n_GPe -> post[ count + post_synapse ] = j + SynapseGPe;
@@ -1205,7 +1164,7 @@ void initalize_synapse( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
                 count_pre++;
             }
         }
-        n_GPi -> num_pre[ i + ( N_GPi * k ) ] = count_pre; 
+        n_GPi -> num_pre[ i + ( N_GPi * k ) ] = count_pre;
     }
     post_synapse += count;
     count = 0;
@@ -1220,7 +1179,7 @@ void initalize_synapse( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
                 count_pre++;
             }
         }
-        n_GPi -> num_pre[ i + ( N_GPi * k ) ] = count_pre; 
+        n_GPi -> num_pre[ i + ( N_GPi * k ) ] = count_pre;
     }
     post_synapse = 0;
     count = 0;
@@ -1259,8 +1218,8 @@ void initalize_synapse( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
     k = 0;
     n_SNc -> num_pre[ 0 ] = 0;
 
-    // PTI→PTN(拡散型)    
-    for ( long i = 0; i < N_PTN; i++ ){        
+    // PTI→PTN(拡散型)
+    for ( long i = 0; i < N_PTN; i++ ){
         for ( long j = 0; j < N_PTI; j++ ){
             n_PTN -> post[ count + post_synapse ] = j + SynapsePTI;
             count++;
@@ -1286,7 +1245,7 @@ void initalize_synapse( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
     post_synapse += count;
     count = 0;
     k++;
-    
+
     // Th→PTN(集中型)
     for ( int t = 0; t < N_chanel; t++ ){
         for ( long i = 0; i < per_chanel_N_PTN; i++ ){
@@ -1350,9 +1309,6 @@ void initalize_synapse( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI,
     count_pre = 0;
     k = 0;
     n_Th -> num_pre[ 0 ] = 0;
-
-    printf("%ld\n",num_of_synapse);
-    num_of_synapse = 0;
 }
 
 // メモリ確保や初期化を行う関数を実行する関数
@@ -1374,10 +1330,10 @@ void initalize( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI, neuron_
 
     // ニューロンを表現する構造体のメンバ変数のメモリ確保
     Allocating_Neuron( n_MSN_D1, n_MSN_D2, n_FSI, n_STN, n_GPe, n_GPi, n_SNc, n_PTN, n_PTI, n_PSN, n_Th, n_CMPf );
-    
+
     // ニューロンを表現する構造体のメンバ変数の初期化
     initalize_Neuron( n_MSN_D1, n_MSN_D2, n_FSI, n_STN, n_GPe, n_GPi, n_SNc, n_PTN, n_PTI, n_PSN, n_Th, n_CMPf );
-    
+
     // 行動選択で選択肢を提示する際に優位的に発火率を上げるニューロンをランダムで決める関数
     initalize_selection ( n_PSN );
 
