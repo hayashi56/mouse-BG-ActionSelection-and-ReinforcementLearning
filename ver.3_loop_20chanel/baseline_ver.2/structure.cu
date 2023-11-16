@@ -48,12 +48,12 @@ void fileclose( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI, neuron_
     // fclose ( n_STN -> file2 );
     // fclose ( n_GPe -> file2 );
     // fclose ( n_GPi -> file2 );
-    // fclose ( n_SNc -> file2 );
+    fclose ( n_SNc -> file2 );
     // fclose ( n_PTI -> file2 );
     fclose ( n_PTN -> file2 );
     fclose ( n_PTN -> file3 );
     fclose ( n_PSN -> file2 );
-    // fclose ( n_Th -> file2 );
+    fclose ( n_Th -> file2 );
     // fclose ( n_CMPf -> file2 );
 }
 

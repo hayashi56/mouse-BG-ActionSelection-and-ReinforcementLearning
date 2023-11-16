@@ -147,7 +147,7 @@ void loop( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI, neuron_t *n_
         t_refr ( n_MSN_D1, n_MSN_D2, n_FSI, n_STN, n_GPe, n_GPi, n_SNc, n_PTN, n_PTI, n_Th );
     }
 
-    for ( int nt = FreeRun; nt < NT_action; nt++ ){
+    for ( int nt = FreeRun; nt < NT; nt++ ){
 
         UpdateConductance ( nt, n_MSN_D1, n_MSN_D2, n_FSI, n_STN, n_GPe, n_GPi, n_SNc, n_PTN, n_PTI, n_PSN, n_Th, n_CMPf );
         Synaptic_current ( n_MSN_D1, n_MSN_D2, n_FSI, n_STN, n_GPe, n_GPi, n_SNc, n_PTN, n_PTI, n_PSN, n_Th, n_CMPf );
@@ -159,15 +159,13 @@ void loop( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI, neuron_t *n_
         t_refr ( n_MSN_D1, n_MSN_D2, n_FSI, n_STN, n_GPe, n_GPi, n_SNc, n_PTN, n_PTI, n_Th );
         output_Spike ( nt, n_MSN_D1, n_MSN_D2, n_FSI, n_STN, n_GPe, n_GPi, n_SNc, n_PTN, n_PTI, n_PSN, n_Th, n_CMPf );
         output_FiringRate_par_seconds ( nt, n_MSN_D1, n_MSN_D2, n_FSI, n_STN, n_GPe, n_GPi, n_SNc, n_PTN, n_PTI, n_PSN, n_Th, n_CMPf );
+        fprintf ( n_PTN -> file2, "%f %f\n", DT * ( nt + 1 ) - FreeRun, n_PTN -> v[ 0 ] );
+        fprintf ( n_SNc -> file2, "%f %f\n", DT * ( nt + 1 ) - FreeRun, n_SNc -> v[ 0 ] );
     }
 
     double elapsedTime = timer_elapsed ();
 
     printf ( "Elapsed time = %f sec.\n", elapsedTime );
-
-    for ( int i = 0; i < N_PTN; i++ ){
-        fprintf ( n_PTN -> file2, "%ld\n", n_PTN -> num_pre[ i ] );
-    }
 
     output_FiringRate ( n_MSN_D1, n_MSN_D2, n_FSI, n_STN, n_GPe, n_GPi, n_SNc, n_PTN, n_PTI, n_PSN, n_Th, n_CMPf );
 }

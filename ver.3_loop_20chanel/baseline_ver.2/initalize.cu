@@ -40,12 +40,12 @@ void file_open ( neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI, neuron
     // n_STN -> file2 = fopen ( "STN.dat", "w" );
     // n_GPe -> file2 = fopen ( "GPe.dat", "w" );
     // n_GPi -> file2 = fopen ( "GPi.dat", "w" );
-    // n_SNc -> file2 = fopen ( "SNc.dat", "w" );
+    n_SNc -> file2 = fopen ( "SNc.dat", "w" );
     n_PTN -> file2 = fopen ( "PTN.dat", "w" );
     n_PTN -> file3 = fopen ( "PTNdebag.dat", "w" );
     // n_PTI -> file2 = fopen ( "PTI.dat", "w" );
     n_PSN -> file2 = fopen ( "PSN.dat", "w" );
-    // n_Th -> file2 = fopen ( "Th.dat", "w" );
+    n_Th -> file2 = fopen ( "Th.dat", "w" );
     // n_CMPf -> file2 = fopen ( "CMPf.dat", "w" );
 }
 

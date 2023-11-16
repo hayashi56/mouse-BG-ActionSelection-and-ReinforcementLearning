@@ -7,7 +7,7 @@ __global__ void UpdateConductance_MSN_D1 ( int nt, neuron_t *n_MSN_D1 ){
     long i = threadIdx.x + blockIdx.x * blockDim.x;
 
     if ( i < N_MSN_D1 ){
-        n_MSN_D1 -> conductance_GABA[ i ] = ( float ) PSP_amplitudes_GABA * ( TAU_GABA * n_MSN_D1 -> conductance_GABA[ i ] + ( n_MSN_D1 -> ts[ i ] + DELAY == nt + 1 ) );
+        n_MSN_D1 -> conductance_GABA[ i ] = ( float ) TAU_GABA * n_MSN_D1 -> conductance_GABA[ i ] + PSP_amplitudes_GABA * ( n_MSN_D1 -> ts[ i ] + DELAY == nt + 1 );
     }
 }
 __global__ void UpdateConductance_MSN_D2 ( int nt, neuron_t *n_MSN_D2 ){
@@ -15,7 +15,7 @@ __global__ void UpdateConductance_MSN_D2 ( int nt, neuron_t *n_MSN_D2 ){
     long i = threadIdx.x + blockIdx.x * blockDim.x;
 
     if ( i < N_MSN_D2 ){
-        n_MSN_D2 -> conductance_GABA[ i ] = ( float ) PSP_amplitudes_GABA * ( TAU_GABA * n_MSN_D2 -> conductance_GABA[ i ] + ( n_MSN_D2 -> ts[ i ] + DELAY == nt + 1 ) );
+        n_MSN_D2 -> conductance_GABA[ i ] = ( float ) TAU_GABA * n_MSN_D2 -> conductance_GABA[ i ] + PSP_amplitudes_GABA * ( n_MSN_D2 -> ts[ i ] + DELAY == nt + 1 );
     }
 }
 __global__ void UpdateConductance_FSI ( int nt, neuron_t *n_FSI ){
@@ -23,7 +23,7 @@ __global__ void UpdateConductance_FSI ( int nt, neuron_t *n_FSI ){
     long i = threadIdx.x + blockIdx.x * blockDim.x;
 
     if ( i < N_FSI ){
-        n_FSI -> conductance_GABA[ i ] = ( float ) PSP_amplitudes_GABA * ( TAU_GABA * n_FSI -> conductance_GABA[ i ] + ( n_FSI -> ts[ i ] + DELAY == nt + 1 ) );
+        n_FSI -> conductance_GABA[ i ] = ( float ) TAU_GABA * n_FSI -> conductance_GABA[ i ] + PSP_amplitudes_GABA * ( n_FSI -> ts[ i ] + DELAY == nt + 1 );
     }
 }
 __global__ void UpdateConductance_STN ( int nt, neuron_t *n_STN ){
@@ -31,8 +31,8 @@ __global__ void UpdateConductance_STN ( int nt, neuron_t *n_STN ){
     long i = threadIdx.x + blockIdx.x * blockDim.x;
 
     if ( i < N_STN ){
-        n_STN -> conductance_AMPA[ i ] = ( float ) PSP_amplitudes_AMPA * ( TAU_AMPA * n_STN -> conductance_AMPA[ i ] + ( n_STN -> ts[ i ] + DELAY == nt + 1 ) );
-        n_STN -> conductance_NMDA[ i ] = ( float ) PSP_amplitudes_NMDA * ( TAU_NMDA * n_STN -> conductance_NMDA[ i ] + ( n_STN -> ts[ i ] + DELAY == nt + 1 ) );
+        n_STN -> conductance_AMPA[ i ] = ( float ) TAU_AMPA * n_STN -> conductance_AMPA[ i ] + PSP_amplitudes_AMPA * ( n_STN -> ts[ i ] + DELAY == nt + 1 );
+        n_STN -> conductance_NMDA[ i ] = ( float ) TAU_NMDA * n_STN -> conductance_NMDA[ i ] + PSP_amplitudes_NMDA * ( n_STN -> ts[ i ] + DELAY == nt + 1 );
     }
 }
 __global__ void UpdateConductance_GPe ( int nt, neuron_t *n_GPe ){
@@ -40,7 +40,7 @@ __global__ void UpdateConductance_GPe ( int nt, neuron_t *n_GPe ){
     long i = threadIdx.x + blockIdx.x * blockDim.x;
 
     if ( i < N_GPe ){
-        n_GPe -> conductance_GABA[ i ] = ( float ) PSP_amplitudes_GABA * ( TAU_GABA * n_GPe -> conductance_GABA[ i ] + ( n_GPe -> ts[ i ] + DELAY == nt + 1 ) );
+        n_GPe -> conductance_GABA[ i ] = ( float ) TAU_GABA * n_GPe -> conductance_GABA[ i ] + PSP_amplitudes_GABA * ( n_GPe -> ts[ i ] + DELAY == nt + 1 );
     }
 }
 __global__ void UpdateConductance_GPi ( int nt, neuron_t *n_GPi ){
@@ -48,7 +48,7 @@ __global__ void UpdateConductance_GPi ( int nt, neuron_t *n_GPi ){
     long i = threadIdx.x + blockIdx.x * blockDim.x;
 
     if ( i < N_GPi ){
-        n_GPi -> conductance_GABA[ i ] = ( float ) PSP_amplitudes_GABA * ( TAU_GABA * n_GPi -> conductance_GABA[ i ] + ( n_GPi -> ts[ i ] + DELAY == nt + 1 ) );
+        n_GPi -> conductance_GABA[ i ] = ( float ) TAU_GABA * n_GPi -> conductance_GABA[ i ] + PSP_amplitudes_GABA * ( n_GPi -> ts[ i ] + DELAY == nt + 1 );
     }
 }
 __global__ void UpdateConductance_SNc ( int nt, neuron_t *n_SNc ){
@@ -56,15 +56,15 @@ __global__ void UpdateConductance_SNc ( int nt, neuron_t *n_SNc ){
     long i = threadIdx.x + blockIdx.x * blockDim.x;
 
     if ( i < N_SNc ){
-        n_SNc -> conductance_DOPA[ i ] = ( float ) PSP_amplitudes_DOPA * ( TAU_DOPA * n_SNc -> conductance_DOPA[ i ] + ( n_SNc -> ts[ i ] + DELAY == nt + 1 ) );
+        n_SNc -> conductance_DOPA[ i ] = ( float ) TAU_DOPA * n_SNc -> conductance_DOPA[ i ] + PSP_amplitudes_DOPA * ( n_SNc -> ts[ i ] + DELAY == nt + 1 );
     }
 }
 __global__ void UpdateConductance_PTN ( int nt, neuron_t *n_PTN ){
 
     long i = threadIdx.x + blockIdx.x * blockDim.x;
     if ( i < N_PTN ){
-        n_PTN -> conductance_AMPA[ i ] = ( float ) PSP_amplitudes_AMPA * ( TAU_AMPA * n_PTN -> conductance_AMPA[ i ] + ( n_PTN -> ts[ i ] + DELAY == nt + 1 ) );
-        n_PTN -> conductance_NMDA[ i ] = ( float ) PSP_amplitudes_NMDA * ( TAU_NMDA * n_PTN -> conductance_NMDA[ i ] + ( n_PTN -> ts[ i ] + DELAY == nt + 1 ) );
+        n_PTN -> conductance_AMPA[ i ] = ( float ) TAU_AMPA * n_PTN -> conductance_AMPA[ i ] + PSP_amplitudes_AMPA * ( n_PTN -> ts[ i ] + DELAY == nt + 1 );
+        n_PTN -> conductance_NMDA[ i ] = ( float ) TAU_NMDA * n_PTN -> conductance_NMDA[ i ] + PSP_amplitudes_NMDA * ( n_PTN -> ts[ i ] + DELAY == nt + 1 );
     }
 }
 __global__ void UpdateConductance_PTI ( int nt, neuron_t *n_PTI ){
@@ -79,16 +79,16 @@ __global__ void UpdateConductance_PSN ( int nt, neuron_t *n_PSN ){
 
     long i = threadIdx.x + blockIdx.x * blockDim.x;
     if ( i < N_PSN ){
-        n_PSN -> conductance_AMPA[ i ] = ( float ) PSP_amplitudes_AMPA * ( TAU_AMPA * n_PSN -> conductance_AMPA[ i ] + ( n_PSN -> ts[ i ] + DELAY == nt + 1 ) );
-        n_PSN -> conductance_NMDA[ i ] = ( float ) PSP_amplitudes_NMDA * ( TAU_NMDA * n_PSN -> conductance_NMDA[ i ] + ( n_PSN -> ts[ i ] + DELAY == nt + 1 ) );
+        n_PSN -> conductance_AMPA[ i ] = ( float ) TAU_AMPA * n_PSN -> conductance_AMPA[ i ] + PSP_amplitudes_AMPA * ( n_PSN -> ts[ i ] + DELAY == nt + 1 );
+        n_PSN -> conductance_NMDA[ i ] = ( float ) TAU_NMDA * n_PSN -> conductance_NMDA[ i ] + PSP_amplitudes_NMDA * ( n_PSN -> ts[ i ] + DELAY == nt + 1 );
     }
 }
 __global__ void UpdateConductance_Th ( int nt, neuron_t *n_Th ){
 
     long i = threadIdx.x + blockIdx.x * blockDim.x;
     if ( i < N_Th ){
-        n_Th -> conductance_AMPA[ i ] = ( float ) PSP_amplitudes_AMPA * ( TAU_AMPA * n_Th -> conductance_AMPA[ i ] + ( n_Th -> ts[ i ] + DELAY == nt + 1 ) );
-        n_Th -> conductance_NMDA[ i ] = ( float ) PSP_amplitudes_NMDA * ( TAU_NMDA * n_Th -> conductance_NMDA[ i ] + ( n_Th -> ts[ i ] + DELAY == nt + 1 ) );
+        n_Th -> conductance_AMPA[ i ] = ( float ) TAU_AMPA * n_Th -> conductance_AMPA[ i ] + PSP_amplitudes_AMPA * ( n_Th -> ts[ i ] + DELAY == nt + 1 );
+        n_Th -> conductance_NMDA[ i ] = ( float ) TAU_NMDA * n_Th -> conductance_NMDA[ i ] + PSP_amplitudes_NMDA * ( n_Th -> ts[ i ] + DELAY == nt + 1 );
     }
 }
 __global__ void UpdateConductance_CMPf ( int nt, neuron_t *n_CMPf ){
@@ -96,8 +96,8 @@ __global__ void UpdateConductance_CMPf ( int nt, neuron_t *n_CMPf ){
     long i = threadIdx.x + blockIdx.x * blockDim.x;
 
     if ( i < N_CMPf ){
-        n_CMPf -> conductance_AMPA[ i ] = ( float ) PSP_amplitudes_AMPA * ( TAU_AMPA * n_CMPf -> conductance_AMPA[ i ] + ( n_CMPf -> ts[ i ] + DELAY == nt + 1 ) );
-        n_CMPf -> conductance_NMDA[ i ] = ( float ) PSP_amplitudes_NMDA * ( TAU_NMDA * n_CMPf -> conductance_NMDA[ i ] + ( n_CMPf -> ts[ i ] + DELAY == nt + 1 ) );
+        n_CMPf -> conductance_AMPA[ i ] = ( float ) TAU_AMPA * n_CMPf -> conductance_AMPA[ i ] + PSP_amplitudes_AMPA * ( n_CMPf -> ts[ i ] + DELAY == nt + 1 );
+        n_CMPf -> conductance_NMDA[ i ] = ( float ) TAU_NMDA * n_CMPf -> conductance_NMDA[ i ] + PSP_amplitudes_NMDA * ( n_CMPf -> ts[ i ] + DELAY == nt + 1 );
     }
 }
 void UpdateConductance ( int nt, neuron_t *n_MSN_D1, neuron_t *n_MSN_D2, neuron_t *n_FSI, neuron_t *n_STN, neuron_t *n_GPe, neuron_t *n_GPi, neuron_t *n_SNc, neuron_t *n_PTN, neuron_t *n_PTI, neuron_t *n_PSN, neuron_t *n_Th, neuron_t *n_CMPf ){
